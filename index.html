@@ -1,0 +1,1738 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="意見調查（約 1 分鐘）：南瓜虛擬科技想推出 AI 中控企業版，還沒開賣，想先聽你對功能和價格的意見。">
+<meta property="og:title" content="南瓜 AI 中控企業版｜意見調查">
+<meta property="og:description" content="還沒開賣，想先聽你的意見：想要哪些功能、價格合不合理（約 1 分鐘，不是訂購）">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#070B16">
+<title>南瓜 AI 中控意見調查</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  /* Layout: a full-screen cockpit intro over a real-time Earth (briefing, three steps, warp, arrival), then a one-column survey (max 560px). Gold is kept for "press this now"; green means done; cyan is instrument light. */
+  --bg:#070B16;
+  --deep:#04060D;
+  --panel:#101A30;
+  --raised:#18264A;
+  --glass:rgba(7,11,22,.74);
+  --line:rgba(140,170,220,.22);
+  --line2:rgba(140,170,220,.42);
+  --fg:#F2F5FB;
+  --muted:#A8B4CC;
+  --gold:#FFC83D;
+  --gold-deep:#E0A416;
+  --hot:#FF7A2F;
+  --ok:#4FE3A1;
+  --cyan:#7FE3FF;
+  --warn:#FF8F7A;
+  --ink:#0B1220;
+  --f-ui:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --f-num:'Barlow Condensed','Noto Sans TC',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-ui);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+[hidden]{display:none!important}
+img{max-width:100%}
+button{font:inherit;color:inherit}
+a{color:var(--gold)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+html.lock,html.lock body{overflow:hidden}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
+.flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:45}
+.flash.go{animation:flash .9s ease-out}
+.flash.soft{background:var(--gold)}
+.flash.soft.go{animation:flashSoft .7s ease-out}
+@keyframes flash{0%{opacity:0}14%{opacity:1}100%{opacity:0}}
+@keyframes flashSoft{0%{opacity:0}16%{opacity:.4}100%{opacity:0}}
+
+.sky{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(90% 60% at 82% 0%,rgba(56,96,190,.22),transparent 60%),radial-gradient(70% 50% at 0% 78%,rgba(120,70,190,.13),transparent 65%)}
+.sky i{position:absolute;inset:0 -260px;background-repeat:repeat;transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.sky i:nth-child(1){background-image:radial-gradient(1px 1px at 20px 30px,#fff 55%,transparent 60%),radial-gradient(1px 1px at 130px 90px,#CFE3FF 55%,transparent 60%),radial-gradient(1px 1px at 80px 160px,#fff 55%,transparent 60%),radial-gradient(1px 1px at 190px 210px,#FFE3A0 55%,transparent 60%),radial-gradient(1px 1px at 215px 60px,#fff 55%,transparent 60%);background-size:240px 240px;opacity:.6;transform:translateX(calc(var(--sx,0px)*.5));animation:tw1 5s ease-in-out infinite}
+.sky i:nth-child(2){background-image:radial-gradient(1.5px 1.5px at 60px 50px,#fff 55%,transparent 60%),radial-gradient(1.5px 1.5px at 250px 180px,#BFE3FF 55%,transparent 60%),radial-gradient(1.5px 1.5px at 150px 300px,#fff 55%,transparent 60%);background-size:340px 340px;opacity:.7;transform:translateX(var(--sx,0px));animation:tw2 7s ease-in-out infinite}
+.sky i:nth-child(3){background-image:radial-gradient(2.2px 2.2px at 110px 140px,#fff 50%,transparent 60%),radial-gradient(2px 2px at 420px 380px,#FFE3A0 50%,transparent 60%),radial-gradient(2.2px 2.2px at 300px 60px,#9FE8FF 50%,transparent 60%);background-size:520px 520px;opacity:.85;transform:translateX(calc(var(--sx,0px)*1.8))}
+@keyframes tw1{50%{opacity:.28}}
+@keyframes tw2{50%{opacity:.4}}
+.sky b{position:absolute;top:16%;left:-200px;width:170px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff);opacity:0;transform:rotate(18deg);animation:shoot 11s linear 3s infinite}
+.sky b + b{top:44%;animation-delay:8.5s;animation-duration:17s}
+@keyframes shoot{0%{opacity:0;translate:0 0}2%{opacity:.9}9%{opacity:0;translate:150vw 49vw}100%{opacity:0;translate:150vw 49vw}}
+.sky em{position:absolute;left:-250vw;bottom:calc(-600vw + 84px);width:600vw;height:600vw;border-radius:50%;background:#081D45;box-shadow:0 0 70px 10px rgba(90,170,255,.4),inset 0 14px 46px rgba(120,190,255,.38)}
+.hud{position:fixed;z-index:50;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) 10px max(14px,env(safe-area-inset-left,0px));pointer-events:none}
+.hud.solid{background:linear-gradient(180deg,var(--bg) 62%,rgba(7,11,22,0))}
+.hud>*{pointer-events:auto}
+.hud-brand{font-size:12px;font-weight:700;white-space:nowrap;text-shadow:0 1px 8px #000}
+.hud-brand b{font-family:var(--f-mono);letter-spacing:.2em;color:var(--gold);margin-right:8px}
+.hud-actions{display:flex;gap:8px}
+@media (max-width:379px){.hud-co{display:none}.cargo .cg{padding:2px 5px;font-size:11px}.reticle .ret-label{left:72%;font-size:12px;padding:3px 9px}}
+.hud-btn{min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line2);background:var(--glass);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer}
+.hud-btn[aria-pressed="true"]{border-color:var(--cyan);color:var(--cyan)}
+.hud-btn.quiet{padding:0 6px;border-color:transparent;background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:11px;font-weight:500;color:var(--muted);opacity:.7;text-shadow:0 1px 6px #000}
+
+/* ---------- intro scenes ---------- */
+.scene{position:fixed;inset:0;z-index:10;overflow:hidden;background:var(--deep);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#cockpit{background:linear-gradient(118deg,rgba(120,150,255,0) 28%,rgba(120,150,255,.05) 44%,rgba(190,170,255,.07) 50%,rgba(120,150,255,.05) 56%,rgba(120,150,255,0) 72%),radial-gradient(120% 90% at 50% 30%,#0B1430 0%,#060A18 55%,var(--deep) 100%)}
+.cam{position:absolute;inset:0;will-change:translate}
+.engine .cam{animation:rumble .11s linear infinite}
+@keyframes rumble{50%{transform:translate(1.2px,-1.2px)}}
+.stars{position:absolute;inset:0;opacity:.85;background-image:radial-gradient(1.2px 1.2px at 18px 26px,#fff 60%,transparent 61%),radial-gradient(1px 1px at 96px 70px,#CFE3FF 60%,transparent 61%),radial-gradient(1.6px 1.6px at 150px 140px,#fff 60%,transparent 61%),radial-gradient(1px 1px at 60px 170px,#FFE3A0 60%,transparent 61%),radial-gradient(1.2px 1.2px at 200px 40px,#fff 60%,transparent 61%);background-size:230px 210px;animation:starDrift 80s linear infinite}
+@keyframes starDrift{to{background-position:230px 210px}}
+.eglow,.earth-fallback{position:absolute;left:var(--ex,50%);top:var(--ey,38%);width:calc(var(--er,190px)*2);height:calc(var(--er,190px)*2);margin:calc(var(--er,190px)*-1) 0 0 calc(var(--er,190px)*-1);border-radius:50%;pointer-events:none}
+.eglow{box-shadow:0 0 calc(var(--er,190px)*.3) calc(var(--er,190px)*.05) rgba(90,170,255,.42);transition:opacity .3s}
+.launching .eglow{opacity:0}
+.earth-fallback{background:radial-gradient(circle at 34% 30%,#4B8BE6,#164690 52%,#07183C 100%)}
+.earth-ready .earth-fallback{display:none}
+#earth,#warpCv{position:absolute;inset:0;width:100%;height:100%}
+.thrust-glow{position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(70% 40% at 50% 108%,rgba(255,110,60,.85),rgba(255,70,40,.25) 55%,transparent 76%);transition:opacity .5s}
+.engine .thrust-glow{opacity:1;animation:flick 1.3s ease-in-out infinite}
+@keyframes flick{50%{filter:brightness(1.4)}}
+.frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.frame .mull{display:none}
+@media (min-aspect-ratio:1/1){.frame .mull{display:block}}
+.console{position:absolute;left:0;right:0;bottom:0;width:100%;height:max(330px,40%);pointer-events:none}
+.cabin,.cab-s,.cab-b,.cab-shade{position:absolute;top:0;pointer-events:none}
+.cabin{max-width:none}
+.cab-s{background-image:url(img/cabin.webp);background-repeat:no-repeat}
+.cab-b{left:0;right:0;bottom:0;top:auto;background:#161B22}
+.cab-shade{inset:0;background:linear-gradient(90deg,rgba(4,6,13,.66),rgba(4,6,13,0) 24%,rgba(4,6,13,0) 76%,rgba(4,6,13,.66))}
+.has-cabin .frame,.has-cabin .console{display:none}
+.has-cabin .thrust-glow{background:radial-gradient(70% 34% at 50% 108%,rgba(255,110,60,.7),rgba(255,70,40,.18) 55%,transparent 76%)}
+.pilot{position:absolute;left:50%;top:calc(100% - max(330px,40%) - 84px);width:min(80vw,340px,44vh);height:auto;transform:translateX(-50%);pointer-events:none;-webkit-mask-image:linear-gradient(#000 66%,transparent 98%);mask-image:linear-gradient(#000 66%,transparent 98%)}
+img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40%) - 104px)}
+@media (max-height:720px){img.pilot{top:calc(100% - max(330px,40%) - 62px)}}
+.inst{display:none}
+.inst p{margin:0}
+.inst-h{font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--cyan)}
+.inst-r{display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
+.inst-r b{color:var(--fg);font-weight:700}
+.inst-r.on b{color:var(--ok)}
+.orbit-mini{display:block;width:100%;height:auto}
+@media (min-width:1180px){
+  .inst{display:flex;flex-direction:column;gap:8px;position:absolute;bottom:28px;width:236px;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:rgba(7,11,22,.66);font-size:13px;transition:opacity .4s}
+  .inst.l{left:calc(4% + 36px)}
+  .inst.r{right:calc(4% + 36px)}
+  .launching .inst{opacity:0}
+}
+.vig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(4,6,13,.62) 0%,rgba(4,6,13,0) 18%)}
+.route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.route path{fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:3 11;opacity:0;filter:drop-shadow(0 0 6px rgba(255,200,61,.9));transition:opacity .4s}
+.locked .route path{opacity:1;animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-28}}
+.reticle{position:absolute;z-index:1;left:0;top:0;width:116px;height:116px;margin:-58px 0 0 -58px;border-radius:50%;border:2px solid var(--cyan);color:var(--cyan);opacity:0;transform:translate(var(--rx,50vw),var(--ry,38vh)) scale(2.4);transition:transform 1.3s cubic-bezier(.3,1.2,.4,1),opacity .3s,border-color .3s,color .3s;pointer-events:none}
+.reticle::before,.reticle::after{content:"";position:absolute;background:currentColor}
+.reticle::before{left:50%;top:-12px;bottom:-12px;width:2px;margin-left:-1px;-webkit-mask:linear-gradient(#000 0 26px,transparent 26px calc(100% - 26px),#000 calc(100% - 26px));mask:linear-gradient(#000 0 26px,transparent 26px calc(100% - 26px),#000 calc(100% - 26px))}
+.reticle::after{top:50%;left:-12px;right:-12px;height:2px;margin-top:-1px;-webkit-mask:linear-gradient(90deg,#000 0 26px,transparent 26px calc(100% - 26px),#000 calc(100% - 26px));mask:linear-gradient(90deg,#000 0 26px,transparent 26px calc(100% - 26px),#000 calc(100% - 26px))}
+.reticle.show{opacity:1;transform:translate(var(--rx,50vw),var(--ry,38vh)) scale(1)}
+.reticle.lock{border-color:var(--gold);color:var(--gold);animation:lockPulse 1.2s ease-in-out infinite}
+@keyframes lockPulse{50%{box-shadow:0 0 0 8px rgba(255,200,61,.18),0 0 34px rgba(255,200,61,.6)}}
+.ret-label{position:absolute;left:84%;bottom:84%;padding:3px 12px;border-radius:8px;background:var(--gold);color:var(--ink);font-size:13px;font-weight:900;white-space:nowrap;opacity:0;transition:opacity .3s}
+.reticle.lock .ret-label{opacity:1}
+
+.mission{position:absolute;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));top:calc(58px + env(safe-area-inset-top,0px));max-width:560px;margin:0 auto;pointer-events:none;transition:opacity .4s}
+.m-kicker{margin:0 0 2px;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--cyan);text-shadow:0 1px 8px #000}
+.m-title{margin:0;font-size:20px;line-height:1.3;font-weight:900;text-shadow:0 2px 14px rgba(0,0,0,.9)}
+.m-tele{margin:4px 0 0;font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-shadow:0 1px 8px #000}
+.m-tele b{color:var(--fg);font-weight:700}
+
+.brief,.ui{position:absolute;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:10px;transition:opacity .4s}
+#cockpit:not(.started) .ui,#cockpit:not(.started) .mission{display:none}
+#cockpit.started .brief{display:none}
+.brief{-webkit-user-select:text;user-select:text}
+.brief-card{display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:20px;border:1px solid var(--line2);background:rgba(7,11,22,.84);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:rise .6s cubic-bezier(.2,.9,.2,1) both}
+.badge{align-self:flex-start;margin:0;padding:4px 12px;border-radius:999px;background:var(--gold);color:var(--ink);font-size:13px;font-weight:900}
+.brief h1{margin:0;font-size:clamp(26px,7.4vw,34px);line-height:1.28;font-weight:900}
+.brief h1 em{font-style:normal;color:var(--gold)}
+.brief h1 .eyebrow{display:block;margin-bottom:4px;font-size:15px;line-height:1.5;font-weight:700;color:var(--muted)}
+.brief p{margin:0}
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:15px;font-weight:500}
+.flow li{display:flex;gap:10px;align-items:baseline}
+.flow b{flex:0 0 auto;font-family:var(--f-mono);font-size:12px;color:var(--cyan)}
+.skip-link{align-self:center;min-height:30px;padding:0 10px;border:0;background:transparent;font-size:12px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;opacity:.75;cursor:pointer}
+.fine{font-size:12px;text-align:center;color:var(--muted)}
+
+.launching .ui,.launching .mission{opacity:0;pointer-events:none}
+.ready .steps,.ready .thrust{display:none}
+.cargo{display:flex;flex-wrap:wrap;align-items:center;gap:3px}
+.cargo-k{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;color:var(--muted);margin-right:1px}
+.cg{padding:2px 6px;border-radius:999px;border:1px solid var(--line2);background:var(--glass);font-size:12px;font-weight:700;color:var(--muted);transition:background .25s,color .25s,border-color .25s,box-shadow .25s,transform .25s}
+.cg.on{border-color:var(--ok);background:var(--ok);color:var(--ink);box-shadow:0 0 14px rgba(79,227,161,.6);transform:translateY(-2px)}
+.log{padding:10px 14px;border-radius:14px;border:1px solid var(--line2);background:var(--glass);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.log-who{margin:0 0 2px;font-family:var(--f-mono);font-size:10px;font-weight:700;letter-spacing:.16em;color:var(--cyan)}
+.log-text{margin:0;min-height:3.1em;font-size:15px;line-height:1.55;font-weight:500}
+.log-text::after{content:"";display:inline-block;width:8px;height:1em;margin-left:3px;vertical-align:-2px;background:var(--cyan);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.thrust{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;color:var(--muted)}
+.thrust .bar{height:8px;border-radius:4px;background:rgba(140,170,220,.2);overflow:hidden}
+.thrust .bar i{display:block;width:0;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--hot),var(--gold));transition:width 1.2s cubic-bezier(.3,.8,.3,1)}
+.thrust b{min-width:4ch;text-align:right;color:var(--fg)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sbtn{position:relative;width:100%;min-height:76px;padding:8px 4px;border-radius:14px;border:1.5px solid var(--line2);background:var(--glass);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;overflow:hidden;cursor:pointer;transition:transform .08s,border-color .3s,color .3s}
+.sbtn:active{transform:scale(.94)}
+.sbtn .n{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;opacity:.7}
+.sbtn .t{font-size:15px;font-weight:900;line-height:1.25}
+.sbtn .s{font-size:11px;font-weight:700}
+.sbtn[data-state="lock"]{color:var(--muted);opacity:.55}
+.sbtn[data-state="go"]{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.18),0 0 22px rgba(255,200,61,.35);animation:goPulse 1.3s ease-in-out infinite}
+.sbtn[data-state="go"] .s{color:var(--gold)}
+.sbtn[data-state="on"]{border-color:var(--ok);color:var(--ok)}
+.sbtn[data-state="on"]::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(79,227,161,.4) 50%,transparent 70%);transform:translateX(-120%);animation:sweep .9s ease-out}
+.sbtn.nope{animation:nope .35s}
+@keyframes goPulse{50%{box-shadow:0 0 0 6px rgba(255,200,61,.1),0 0 32px rgba(255,200,61,.6)}}
+@keyframes sweep{to{transform:translateX(120%)}}
+@keyframes nope{20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.warp{position:relative;align-self:center;width:128px;height:128px;margin-top:4px;border:0;border-radius:50%;background:radial-gradient(circle at 50% 32%,#FFA25C,#E2451C 72%);color:#fff;font-weight:900;line-height:1.25;cursor:pointer;touch-action:none;box-shadow:0 0 0 6px rgba(255,122,47,.22),0 0 44px rgba(255,122,47,.65);animation:warpIn .5s cubic-bezier(.2,1.5,.4,1),warpPulse 1.1s ease-in-out .5s infinite}
+.warp::before{content:"";position:absolute;inset:-11px;border-radius:50%;background:conic-gradient(var(--gold) calc(var(--p,0)*1turn),rgba(255,255,255,.16) 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px))}
+.warp small{display:block;font-size:12px;font-weight:700;opacity:.92}
+.warp b{display:block;font-size:20px}
+.warp.hold{animation:none;transform:scale(.94)}
+@keyframes warpIn{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes warpPulse{50%{box-shadow:0 0 0 12px rgba(255,122,47,.12),0 0 64px rgba(255,122,47,.9)}}
+.count{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;font-family:var(--f-num);font-size:min(48vw,280px);font-weight:700;line-height:1;color:#fff;text-shadow:0 0 44px rgba(255,200,61,.9)}
+.count span{display:block;animation:countPop .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes countPop{from{transform:scale(2.4);opacity:0}to{transform:scale(1);opacity:1}}
+@media (max-height:720px){
+  .sbtn{min-height:62px}
+  .warp{width:104px;height:104px}
+  .brief-card{padding:14px;gap:8px}
+  .brief .lede{font-size:14px}
+  .flow{font-size:14px}
+}
+
+#arrive{background:radial-gradient(120% 80% at 50% 34%,#1A2C5C 0%,#0A1226 52%,var(--deep) 100%)}
+.core-stage{position:absolute;left:50%;top:31%;width:0;height:0;perspective:700px}
+.halo{position:absolute;left:-170px;top:-170px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,61,.3),rgba(255,200,61,0) 66%);animation:haloPulse 2.4s ease-in-out infinite}
+@keyframes haloPulse{50%{transform:scale(1.12);opacity:.75}}
+.orbit-ring{position:absolute;left:var(--orx,-150px);top:var(--ory,-54px);width:var(--orw,300px);height:var(--orh,108px);border-radius:50%;border:1px solid rgba(127,227,255,.45);opacity:0;transition:opacity .8s .5s}
+.in .orbit-ring{opacity:1}
+.core{position:absolute;left:0;top:0;transform:scale(0);transform-style:preserve-3d}
+.in .core{animation:coreIn .8s cubic-bezier(.2,1.5,.4,1) .1s forwards}
+@keyframes coreIn{to{transform:scale(1)}}
+.cube{position:absolute;left:-56px;top:-56px;width:112px;height:112px;transform-style:preserve-3d;animation:cubeSpin 12s linear infinite}
+.cube b{position:absolute;inset:0;border-radius:14px;border:2px solid var(--gold);background:rgba(255,200,61,.08);box-shadow:inset 0 0 26px rgba(255,200,61,.42)}
+.cube b:nth-child(1){transform:translateZ(56px)}
+.cube b:nth-child(2){transform:rotateY(90deg) translateZ(56px)}
+.cube b:nth-child(3){transform:rotateY(180deg) translateZ(56px)}
+.cube b:nth-child(4){transform:rotateY(270deg) translateZ(56px)}
+.cube b:nth-child(5){transform:rotateX(90deg) translateZ(56px)}
+.cube b:nth-child(6){transform:rotateX(-90deg) translateZ(56px)}
+.cube i{position:absolute;inset:30px;border-radius:50%;background:radial-gradient(circle,#fff,var(--gold) 42%,rgba(255,200,61,0) 72%);animation:haloPulse 1.5s ease-in-out infinite}
+@keyframes cubeSpin{from{transform:rotateX(-20deg) rotateY(0)}to{transform:rotateX(-20deg) rotateY(360deg)}}
+.oc{position:absolute;left:0;top:0;padding:3px 10px;border-radius:999px;border:1px solid var(--cyan);background:rgba(7,11,22,.86);font-size:12px;font-weight:700;white-space:nowrap;opacity:0;will-change:transform}
+.arrive-ui{position:absolute;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:12px;-webkit-user-select:text;user-select:text}
+.arrive-ui>*{opacity:0;transform:translateY(20px)}
+.in .arrive-ui>*{animation:rise .6s cubic-bezier(.2,.9,.2,1) forwards}
+.in .arrive-ui>*:nth-child(1){animation-delay:.45s}
+.in .arrive-ui>*:nth-child(2){animation-delay:.6s}
+.in .arrive-ui>*:nth-child(3){animation-delay:.75s}
+.in .arrive-ui>*:nth-child(4){animation-delay:.9s}
+.in .arrive-ui>*:nth-child(5){animation-delay:1.05s}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.pill{align-self:flex-start;margin:0;padding:4px 12px;border-radius:999px;border:1px solid var(--ok);color:var(--ok);font-size:13px;font-weight:700}
+.arrive-ui h2{margin:0;font-size:clamp(26px,7.4vw,36px);line-height:1.25;font-weight:900;text-wrap:balance}
+.arrive-ui h2 em{font-style:normal;color:var(--gold)}
+.arrive-ui p{margin:0}
+.lede{color:var(--muted);text-wrap:pretty}
+.soft{font-weight:700}
+.cta{min-height:56px;border:0;border-radius:16px;background:var(--gold);color:var(--ink);font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 0 0 0 rgba(255,200,61,.5);animation:ctaPulse 1.6s ease-out 1.8s infinite;transition:transform .08s}
+.cta:active{transform:scale(.97)}
+@keyframes ctaPulse{to{box-shadow:0 0 0 16px rgba(255,200,61,0)}}
+
+/* ---------- survey ---------- */
+.page{position:relative;z-index:1;max-width:560px;margin:0 auto;padding-block:calc(66px + env(safe-area-inset-top,0px)) 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+.preview{margin:0;padding:8px 12px;border:1px dashed var(--gold);border-radius:10px;color:var(--gold);font-size:13px}
+#wizard{display:flex;flex-direction:column;gap:20px}
+.trip{position:relative;height:52px;margin:14px 28px 0}
+.trip .track,.trip .fill{position:absolute;left:0;top:13px;height:3px;border-radius:2px}
+.trip .track{right:0;background:var(--line)}
+.trip .fill{width:0;background:linear-gradient(90deg,var(--cyan),var(--gold));transition:width .6s cubic-bezier(.3,.9,.3,1)}
+.trip ol{list-style:none;margin:0;padding:0;position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between}
+.trip li{width:0;display:flex;flex-direction:column;align-items:center;gap:12px;font-size:11px;white-space:nowrap;color:var(--muted)}
+.trip li::before{content:"";width:11px;height:11px;margin-top:9px;border-radius:50%;border:2px solid var(--line2);background:var(--bg);transition:background .3s,border-color .3s,box-shadow .3s}
+.trip li.done::before{border-color:var(--cyan);background:var(--cyan)}
+.trip li.cur{color:var(--gold);font-weight:700}
+.trip li.cur::before{border-color:var(--gold);background:var(--gold);box-shadow:0 0 12px var(--gold)}
+.ship{position:absolute;left:0;top:-15px;width:26px;height:26px;margin-left:-13px;color:var(--gold);transition:left .6s cubic-bezier(.3,.9,.3,1);filter:drop-shadow(0 0 6px rgba(255,200,61,.8))}
+
+.step{display:flex;flex-direction:column;gap:16px}
+.step.in>*{animation:stepIn .5s cubic-bezier(.2,.9,.2,1) both}
+.step.in>*:nth-child(2){animation-delay:.05s}
+.step.in>*:nth-child(3){animation-delay:.1s}
+.step.in>*:nth-child(4){animation-delay:.15s}
+.step.in>*:nth-child(5){animation-delay:.2s}
+.step.in>*:nth-child(n+6){animation-delay:.25s}
+@keyframes stepIn{from{opacity:0;transform:translateY(22px)}}
+.step h2{margin:0;font-size:24px;line-height:1.35;font-weight:900;text-wrap:balance;outline:none}
+.kicker{display:block;margin-bottom:6px;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--cyan)}
+.hint{margin:-6px 0 0;font-size:14px;color:var(--muted)}
+.note{margin:0;font-size:13px;line-height:1.6;color:var(--muted)}
+
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+@media (min-width:520px){.cards.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.opt{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 48px 14px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--panel);cursor:pointer;transition:border-color .2s,background .2s}
+.opt input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.opt .t{font-weight:700}
+.opt .d{font-size:14px;line-height:1.5;color:var(--muted)}
+.opt .mark{position:absolute;right:14px;top:15px;width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line2);transition:background .2s,border-color .2s}
+.opt.radio .mark{border-radius:50%}
+.opt.on{border-color:var(--gold);background:var(--raised)}
+.opt.on .mark{border-color:var(--gold);background:var(--gold)}
+.opt.on .mark::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid var(--ink);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.opt:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.pop{animation:pop .32s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(.94)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+.plans{display:flex;flex-direction:column;gap:12px}
+.plan{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:16px;background:var(--panel);border:1.5px solid var(--line);transition:border-color .25s,box-shadow .25s}
+.plan.featured{border-color:var(--line2)}
+.plan.r-low{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(127,227,255,.12)}
+.plan.r-fair{border-color:var(--ok);box-shadow:0 0 0 3px rgba(79,227,161,.12)}
+.plan.r-high{border-color:var(--warn);box-shadow:0 0 0 3px rgba(255,143,122,.12)}
+.plan-head{display:flex;align-items:center;gap:10px}
+.plan h3{margin:0;font-size:18px;font-weight:900}
+.tag{padding:2px 10px;border-radius:999px;border:1px solid var(--cyan);color:var(--cyan);font-size:12px;font-weight:700}
+.price{margin:0;display:flex;align-items:baseline;gap:4px;flex-wrap:wrap}
+.price .num{font-family:var(--f-num);font-size:50px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.price .unit{font-weight:700}
+.price .suffix{color:var(--muted)}
+.plan ul{margin:0;padding-left:1.2em;font-size:14px;line-height:1.6;color:var(--muted)}
+.rate{margin:0;padding:0;border:0;min-width:0}
+.rate legend{padding:0;margin-bottom:8px;font-size:13px;color:var(--muted)}
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.seg input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.seg label{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:12px;border:1.5px solid var(--line2);font-size:15px;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .08s}
+.seg label:active{transform:scale(.95)}
+.seg input:checked + label{color:var(--ink)}
+.seg input[value="low"]:checked + label{background:var(--cyan);border-color:var(--cyan)}
+.seg input[value="fair"]:checked + label{background:var(--ok);border-color:var(--ok)}
+.seg input[value="high"]:checked + label{background:var(--warn);border-color:var(--warn)}
+.seg input:focus-visible + label{outline:2px solid var(--gold);outline-offset:2px}
+.react{margin:0;min-height:1.6em;font-size:13px;color:var(--muted)}
+
+.group{margin:0;padding:0;border:0;min-width:0}
+.group legend{padding:0;margin-bottom:10px;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line2);background:var(--panel);font-size:15px;font-weight:700;cursor:pointer;transition:transform .08s}
+.chip span:active{transform:scale(.94)}
+.chip input:checked + span{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.chip input:focus-visible + span{outline:2px solid var(--gold);outline-offset:2px}
+
+.grid2{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:520px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0;font-size:14px;font-weight:700;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;min-height:48px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line2);background:var(--panel);color:var(--fg);font:inherit;font-size:16px;font-weight:400}
+.field textarea{resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:#7D8AA6}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.error{margin:0;padding:10px 12px;border-radius:10px;border:1px solid var(--warn);color:var(--warn);font-size:14px}
+.nav{display:flex;gap:10px;margin-top:4px}
+.btn{flex:1;min-height:54px;border-radius:16px;border:0;background:var(--gold);color:var(--ink);font-size:16px;font-weight:900;cursor:pointer;transition:transform .08s}
+.btn:active{transform:scale(.96)}
+.btn.back{flex:0 0 auto;padding:0 18px;background:transparent;border:1.5px solid var(--line2);color:var(--fg);font-weight:700}
+.btn:disabled{opacity:.6;cursor:wait}
+
+.stamp{align-self:flex-start;margin:6px 0 0;padding:4px 16px;border:3px solid var(--ok);border-radius:10px;color:var(--ok);font-size:22px;font-weight:900;letter-spacing:.2em;transform:rotate(-7deg);animation:stamp .5s cubic-bezier(.2,1.6,.4,1) .15s both}
+@keyframes stamp{from{transform:rotate(-7deg) scale(3);opacity:0}}
+.done-title{margin:0;font-size:32px;line-height:1.3;font-weight:900;outline:none}
+.contact{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:16px;background:var(--panel);border:1px solid var(--line2)}
+.contact p{margin:0}
+.c-k{font-size:13px;color:var(--muted)}
+.c-name{font-weight:700}
+.c-mail{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--f-mono);font-size:15px}
+.mini{min-height:36px;padding:0 12px;border-radius:999px;border:1.5px solid var(--gold);background:transparent;color:var(--gold);font-family:var(--f-ui);font-size:13px;font-weight:700;cursor:pointer}
+.small{font-size:14px}
+.again{align-self:flex-start;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line2);background:transparent;font-size:14px;font-weight:700;cursor:pointer}
+.foot{margin-top:8px;font-size:12px;line-height:1.7;text-align:center;color:var(--muted)}
+
+
+/* ---- cockpit v4: the bottom panel is a physical rear console; an instrument strip sits under the window ---- */
+#cockpit:not(.started) .ui{display:flex;visibility:hidden}
+.mission{text-align:center}
+.m-kicker{margin:0;font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;color:var(--cyan);text-shadow:0 0 10px rgba(127,227,255,.7),0 1px 6px #000}
+.m-title{font-size:17px;font-weight:700;letter-spacing:.04em;color:#EAF6FF;text-shadow:0 0 12px rgba(127,227,255,.55),0 1px 8px #000}
+.glass{position:absolute;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.085) 0%,rgba(255,255,255,0) 26%),radial-gradient(120% 90% at 50% 40%,rgba(0,0,0,0) 62%,rgba(4,10,24,.5) 100%)}
+.pilot{-webkit-mask-image:linear-gradient(#000 86%,transparent 99%);mask-image:linear-gradient(#000 86%,transparent 99%);filter:brightness(.9)}
+.pilot-shade{position:absolute;pointer-events:none;background:linear-gradient(180deg,rgba(110,180,255,.2) 0%,rgba(4,6,13,0) 26%,rgba(4,6,13,.22) 58%,rgba(4,6,13,.66) 100%);-webkit-mask:url(img/astronaut.webp) center/100% 100% no-repeat;mask:url(img/astronaut.webp) center/100% 100% no-repeat}
+
+.mfd-strip{position:absolute;display:flex;gap:6px;padding:6px;border-radius:10px 10px 5px 5px;border-top:1px solid rgba(159,220,255,.55);background:linear-gradient(180deg,#242F40 0%,#131A26 30%,#0A0E16 100%);box-shadow:0 12px 22px rgba(0,0,0,.65),0 30px 46px -14px rgba(70,200,255,.22),inset 0 1px 0 rgba(255,255,255,.1)}
+.mfd{position:relative;flex:0 0 27%;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:5px 7px;border-radius:4px;border:1px solid #020406;background:radial-gradient(130% 110% at 50% 0%,#0C3038 0%,#06181C 60%,#030B0E 100%);box-shadow:inset 0 0 12px rgba(0,0,0,.9),0 0 16px rgba(70,220,255,.2);overflow:hidden;font-family:var(--f-mono);color:#A9F3FF;text-shadow:0 0 6px rgba(127,240,255,.6)}
+.mfd::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(0,0,0,.25) 0 1px,transparent 1px 3px),linear-gradient(125deg,rgba(255,255,255,.07),transparent 38%)}
+.mfd p{margin:0;white-space:nowrap}
+.mfd-h{font-size:8px;letter-spacing:.14em;color:#5FD2E6;opacity:.9}
+.mfd-r{display:flex;align-items:baseline;gap:5px;font-size:10px;line-height:1.5}
+.mfd-r span{flex:0 0 auto;font-family:var(--f-ui);font-size:9px;color:#6FBFCC;text-shadow:none}
+.mfd-r b{font-weight:700}
+.mfd-r.on b{color:#7DF5C0;text-shadow:0 0 8px rgba(79,227,161,.8)}
+.mfd-mid{flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,7px);gap:9px 10px;align-content:center;justify-content:center;border-radius:4px;background:linear-gradient(180deg,#0E131C,#080B11);box-shadow:inset 0 1px 4px rgba(0,0,0,.8)}
+.mfd-mid i{width:7px;height:7px;border-radius:50%;background:#1D2A3C;box-shadow:inset 0 1px 1px rgba(0,0,0,.8)}
+.mfd-mid i:nth-child(1),.mfd-mid i:nth-child(6){background:#4FE3A1;box-shadow:0 0 7px rgba(79,227,161,.9)}
+.mfd-mid i:nth-child(3){background:#FFC83D;box-shadow:0 0 7px rgba(255,200,61,.9);animation:blink 1.6s steps(2) infinite}
+.engine .mfd-mid i:nth-child(2),.engine .mfd-mid i:nth-child(5),.locked .mfd-mid i:nth-child(4),.locked .mfd-mid i:nth-child(7){background:#4FE3A1;box-shadow:0 0 7px rgba(79,227,161,.9)}
+.launching .mfd-strip{box-shadow:0 12px 22px rgba(0,0,0,.65),0 30px 60px -10px rgba(255,160,80,.35),inset 0 1px 0 rgba(255,255,255,.1)}
+.mfd:last-child{align-items:flex-end}
+.mfd-strip.compact{padding:5px}
+.mfd-strip.compact .mfd{padding:3px 6px;gap:0}
+.mfd-strip.compact .mfd-h{display:none}
+.mfd-strip.compact .mfd-r{font-size:9.5px;line-height:1.4}
+@media (min-width:700px){.mfd{flex-basis:30%;padding:5px 12px}.mfd-h{font-size:9px}.mfd-r{font-size:11px;line-height:1.45;gap:8px}.mfd-r span{font-size:10px}}
+
+.ui{max-width:600px;padding:14px max(14px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));gap:10px;border-radius:18px 18px 0 0;border-top:1px solid rgba(159,220,255,.5);background:linear-gradient(180deg,rgba(159,220,255,.13) 0,rgba(159,220,255,0) 4px),repeating-linear-gradient(90deg,rgba(255,255,255,.014) 0 1px,rgba(255,255,255,0) 1px 3px),linear-gradient(180deg,#202A3A 0%,#131A26 34%,#090D15 100%);box-shadow:0 -20px 34px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.1)}
+.ui::before,.ui::after{content:"";position:absolute;top:7px;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#7C8AA3,#252E3D 60%,#0A0E16);box-shadow:0 1px 1px rgba(0,0,0,.8)}
+.ui::before{left:9px}
+.ui::after{right:9px}
+.cargo{flex-wrap:nowrap;gap:4px;padding:0 8px}
+.cargo-k{flex:0 0 auto;font-family:var(--f-ui);font-size:10px;letter-spacing:.02em;color:#7C8AA3;margin-right:4px}
+.cargo .cg{flex:1 1 0;min-width:0;padding:3px 0;text-align:center;border-radius:4px;border:1px solid #05070B;background:linear-gradient(180deg,#1B2331,#0F141D);color:#566178;font-size:11px;font-weight:700;box-shadow:inset 0 1px 2px rgba(0,0,0,.75),0 1px 0 rgba(255,255,255,.05);transform:none}
+.cargo .cg.on{border-color:#0D3B28;background:linear-gradient(180deg,#8CF8CB,#2FBF85);color:#04130C;box-shadow:0 0 12px rgba(79,227,161,.75),inset 0 1px 0 rgba(255,255,255,.55);transform:none}
+.log{position:relative;padding:9px 14px 10px;border-radius:8px;border:1px solid #020406;background:radial-gradient(130% 120% at 50% 0%,#0A2A30 0%,#061519 60%,#030A0C 100%);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:inset 0 2px 12px rgba(0,0,0,.9),0 1px 0 rgba(255,255,255,.08),0 0 18px rgba(70,220,255,.12);overflow:hidden}
+.log::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(180deg,rgba(0,0,0,.2) 0 1px,transparent 1px 3px),linear-gradient(125deg,rgba(255,255,255,.06),transparent 34%)}
+.log-who{color:#5FD2E6}
+.log-text{color:#C9FFF6;text-shadow:0 0 8px rgba(127,255,227,.45)}
+.log-text::after{background:#7DF5E0}
+.thrust{padding:0 8px;font-family:var(--f-ui);letter-spacing:.04em;color:#7C8AA3}
+.thrust .bar{height:10px;border-radius:2px;background:#05070B;box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.06)}
+.thrust .bar i{border-radius:0;background:linear-gradient(90deg,#4FE3A1 0%,#FFC83D 62%,#FF7A2F 100%);-webkit-mask:repeating-linear-gradient(90deg,#000 0 6px,transparent 6px 8px);mask:repeating-linear-gradient(90deg,#000 0 6px,transparent 6px 8px)}
+.thrust b{font-family:var(--f-mono);color:#C9FFF6}
+.steps{gap:10px;padding-bottom:5px}
+.sbtn{min-height:74px;border-radius:10px;border:1px solid #05070B;background:linear-gradient(180deg,#2B3547,#171D29);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 5px 0 #05070B,0 9px 12px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.16);transition:transform .07s,box-shadow .07s,background .3s,color .3s}
+.sbtn:active{transform:translateY(4px);box-shadow:0 1px 0 #05070B,0 2px 4px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.1)}
+.sbtn .n{opacity:.75}
+.sbtn[data-state="lock"]{color:#6B7892;opacity:1}
+.sbtn[data-state="go"]{border-color:#6B4A00;background:linear-gradient(180deg,#FFDE7A,#E7AB1C);color:#1A1204;box-shadow:0 5px 0 #6B4A00,0 0 24px rgba(255,200,61,.55),inset 0 1px 0 rgba(255,255,255,.65);animation:keyGlow 1.3s ease-in-out infinite}
+.sbtn[data-state="go"] .s{color:#3A2A00}
+.sbtn[data-state="on"]{border-color:#0D3B28;background:linear-gradient(180deg,#173428,#0E2019);color:#7DF5C0;transform:translateY(3px);box-shadow:0 2px 0 #05070B,inset 0 0 16px rgba(79,227,161,.28),inset 0 1px 0 rgba(255,255,255,.06)}
+@keyframes keyGlow{50%{box-shadow:0 5px 0 #6B4A00,0 0 36px rgba(255,200,61,.85),inset 0 1px 0 rgba(255,255,255,.65)}}
+.ready .cargo{display:none}
+.launching .ui{opacity:1}
+.warp{z-index:0;margin:22px 0 20px;width:116px;height:116px;border:1px solid #5A1206;background:radial-gradient(circle at 50% 30%,#FFAA6A 0%,#F0561F 46%,#B8300E 100%);box-shadow:0 6px 0 #4A0E04,0 12px 18px rgba(0,0,0,.6),0 0 40px rgba(255,122,47,.55),inset 0 2px 0 rgba(255,255,255,.4)}
+.warp::after{content:"";position:absolute;inset:-22px;z-index:-1;border-radius:50%;background:repeating-conic-gradient(#FFC83D 0 12deg,#0B0E14 12deg 24deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 9px),#000 calc(100% - 8px));mask:radial-gradient(farthest-side,transparent calc(100% - 9px),#000 calc(100% - 8px));opacity:.85}
+.warp.hold{transform:translateY(5px) scale(.97);box-shadow:0 1px 0 #4A0E04,0 3px 6px rgba(0,0,0,.6),0 0 60px rgba(255,122,47,.9),inset 0 2px 0 rgba(255,255,255,.3)}
+@keyframes warpPulse{50%{box-shadow:0 6px 0 #4A0E04,0 12px 18px rgba(0,0,0,.6),0 0 66px rgba(255,122,47,.95),inset 0 2px 0 rgba(255,255,255,.4)}}
+@media (max-height:720px){
+  .ui{gap:8px;padding-top:12px}
+  .sbtn{min-height:60px}
+  .warp{width:98px;height:98px;margin:20px 0 18px}
+  .log-text{min-height:2.9em;font-size:14px}
+}
+
+.stars::before,.stars::after{content:"";position:absolute;inset:0}
+.stars::before{background-image:radial-gradient(.8px .8px at 12px 20px,#fff 60%,transparent 62%),radial-gradient(.8px .8px at 70px 110px,#DCE9FF 60%,transparent 62%),radial-gradient(.8px .8px at 118px 52px,#fff 60%,transparent 62%),radial-gradient(.8px .8px at 40px 150px,#fff 60%,transparent 62%);background-size:137px 173px;opacity:.55}
+.stars::after{background-image:radial-gradient(1.8px 1.8px at 90px 120px,#fff 45%,transparent 62%),radial-gradient(1.6px 1.6px at 330px 300px,#BFE0FF 45%,transparent 62%),radial-gradient(1.6px 1.6px at 250px 40px,#FFE9C2 45%,transparent 62%);background-size:421px 383px;opacity:.9;animation:tw2 6s ease-in-out infinite}
+.moon{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 34% 30%,#F0EEE6 0%,#C2BFB5 42%,#5A5853 76%,#17171A 100%);box-shadow:0 0 10px rgba(220,225,255,.25)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .core{transform:scale(1)}
+  .arrive-ui>*{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="flash" id="flash" aria-hidden="true"></div>
+<div class="sky" id="sky" aria-hidden="true" hidden><i></i><i></i><i></i><b></b><b></b><em></em></div>
+
+<div class="hud" id="hud">
+  <span class="hud-brand"><b>PUMPKIN</b><span class="hud-name"><span class="hud-co">南瓜虛擬科技・</span>意見調查</span></span>
+  <span class="hud-actions">
+    <button type="button" class="hud-btn" id="soundBtn" aria-pressed="false">聲音：關</button>
+    <button type="button" class="hud-btn quiet" id="jumpBtn" hidden>跳過</button>
+  </span>
+</div>
+
+<section class="scene" id="cockpit" aria-labelledby="briefTitle">
+  <div class="cam" id="cam">
+    <div class="stars"></div>
+    <div class="eglow"></div>
+    <div class="earth-fallback"></div>
+    <div class="moon" id="moon" aria-hidden="true" hidden></div>
+    <canvas id="earth" aria-hidden="true"></canvas>
+    <canvas id="warpCv" aria-hidden="true"></canvas>
+    <svg class="route" aria-hidden="true"><path id="routePath" d=""></path></svg>
+    <div class="reticle" id="reticle" aria-hidden="true"><span class="ret-label">目的地：你的公司</span></div>
+    <div class="glass" id="glass" hidden></div>
+    <div class="cab-b" id="cabB" hidden></div>
+    <div class="cab-s" id="cabL" hidden></div>
+    <div class="cab-s" id="cabR" hidden></div>
+    <img class="cabin" id="cabin" alt="" hidden>
+    <canvas class="cabin" id="cabinCv" aria-hidden="true" hidden></canvas>
+    <div class="cab-shade" id="cabShade" hidden></div>
+    <svg class="frame" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="fgL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#03050A"></stop><stop offset=".72" stop-color="#0C1424"></stop><stop offset="1" stop-color="#1D2C47"></stop></linearGradient>
+        <linearGradient id="fgR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#03050A"></stop><stop offset=".72" stop-color="#0C1424"></stop><stop offset="1" stop-color="#1D2C47"></stop></linearGradient>
+        <linearGradient id="fgT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#03050A"></stop><stop offset="1" stop-color="#131E33"></stop></linearGradient>
+      </defs>
+      <g class="mull">
+        <polygon points="24.6,0 26.6,0 20.6,100 18.6,100" fill="#0A111F"></polygon>
+        <polygon points="75.4,0 73.4,0 79.4,100 81.4,100" fill="#0A111F"></polygon>
+        <line x1="26.6" y1="0" x2="20.6" y2="100" stroke="#7FE3FF" stroke-opacity=".22" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+        <line x1="73.4" y1="0" x2="79.4" y2="100" stroke="#7FE3FF" stroke-opacity=".22" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+      </g>
+      <polygon points="0,0 10,0 4,100 0,100" fill="url(#fgL)"></polygon>
+      <polygon points="100,0 90,0 96,100 100,100" fill="url(#fgR)"></polygon>
+      <line x1="10" y1="0" x2="4" y2="100" stroke="#9FDCFF" stroke-opacity=".38" stroke-width="1.5" vector-effect="non-scaling-stroke"></line>
+      <line x1="90" y1="0" x2="96" y2="100" stroke="#9FDCFF" stroke-opacity=".38" stroke-width="1.5" vector-effect="non-scaling-stroke"></line>
+      <path d="M0 0H100V6.5Q50 3 0 6.5Z" fill="url(#fgT)"></path>
+      <path d="M0 6.5Q50 3 100 6.5" fill="none" stroke="#9FDCFF" stroke-opacity=".3" stroke-width="1.5" vector-effect="non-scaling-stroke"></path>
+    </svg>
+    <div class="thrust-glow"></div>
+    <svg class="console" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="cgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16223A"></stop><stop offset=".22" stop-color="#0B1220"></stop><stop offset="1" stop-color="#04060D"></stop></linearGradient>
+        <radialGradient id="cgG" cx=".5" cy="0" r=".6"><stop offset="0" stop-color="#5AAAFF" stop-opacity=".34"></stop><stop offset="1" stop-color="#5AAAFF" stop-opacity="0"></stop></radialGradient>
+      </defs>
+      <path d="M0 11L9 0H91L100 11V100H0Z" fill="url(#cgB)"></path>
+      <path d="M0 11L9 0H91L100 11V60H0Z" fill="url(#cgG)"></path>
+      <path d="M0 11L9 0H91L100 11" fill="none" stroke="#9FDCFF" stroke-opacity=".5" stroke-width="1.5" vector-effect="non-scaling-stroke"></path>
+    </svg>
+    <div class="mfd-strip" id="mfd" aria-hidden="true" hidden>
+      <div class="mfd">
+        <p class="mfd-h">系統狀態</p>
+        <p class="mfd-r"><span>引擎</span><b id="inst-eng">待命</b></p>
+        <p class="mfd-r"><span>導航</span><b id="inst-nav">未鎖定</b></p>
+        <p class="mfd-r"><span>貨艙</span><b id="inst-cargo">0/9</b></p>
+      </div>
+      <div class="mfd-mid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="mfd">
+        <p class="mfd-h">航行資料</p>
+        <p class="mfd-r"><span>高度</span><b id="altV">35,786 km</b></p>
+        <p class="mfd-r"><span>速度</span><b id="velV">3.07 km/s</b></p>
+        <p class="mfd-r"><span>目的地</span><b id="dest">未鎖定</b></p>
+      </div>
+    </div>
+    <svg class="pilot" id="pilot" viewBox="0 0 340 260" role="img" aria-label="坐在駕駛座上的太空人背影">
+      <defs>
+        <radialGradient id="pgHelm" cx=".5" cy=".3" r=".78"><stop offset="0" stop-color="#F4F7FC"></stop><stop offset=".42" stop-color="#BCC8DB"></stop><stop offset=".8" stop-color="#5F6D88"></stop><stop offset="1" stop-color="#27324A"></stop></radialGradient>
+        <linearGradient id="pgSuit" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E8EDF6"></stop><stop offset=".5" stop-color="#97A4BC"></stop><stop offset="1" stop-color="#3A465E"></stop></linearGradient>
+        <linearGradient id="pgRing" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D2DAE8"></stop><stop offset="1" stop-color="#39445B"></stop></linearGradient>
+        <linearGradient id="pgSeat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E2A45"></stop><stop offset="1" stop-color="#070B14"></stop></linearGradient>
+      </defs>
+      <path d="M28 260C28 212 46 178 84 162C104 153 124 147 134 136H206C216 147 236 153 256 162C294 178 312 212 312 260Z" fill="url(#pgSuit)"></path>
+      <path d="M56 198C50 216 48 238 48 260M284 198C290 216 292 238 292 260" fill="none" stroke="#5E6B85" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M84 162C48 178 30 210 28 250" fill="none" stroke="#CFEAFF" stroke-opacity=".55" stroke-width="2.5" stroke-linecap="round"></path>
+      <path d="M256 162C292 178 310 210 312 250" fill="none" stroke="#CFEAFF" stroke-opacity=".9" stroke-width="2.5" stroke-linecap="round"></path>
+      <path d="M118 150L126 186M222 150L214 186" stroke="#2A354B" stroke-width="10" stroke-linecap="round"></path>
+      <path d="M74 260V198C74 182 84 172 100 172H240C256 172 266 182 266 198V260Z" fill="url(#pgSeat)"></path>
+      <path d="M100 172H240" stroke="#4A5F8C" stroke-width="2" stroke-linecap="round"></path>
+      <rect x="136" y="196" width="68" height="64" rx="9" fill="#0A0F1B" stroke="#24324F"></rect>
+      <ellipse cx="170" cy="139" rx="50" ry="11" fill="url(#pgRing)"></ellipse>
+      <circle cx="170" cy="78" r="62" fill="url(#pgHelm)"></circle>
+      <rect x="149" y="94" width="42" height="30" rx="9" fill="#4D5A75" fill-opacity=".6"></rect>
+      <path d="M158 104H182M158 113H182" stroke="#2B3650" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M110 62A62 62 0 0 1 230 62" fill="none" stroke="#DDF1FF" stroke-width="3" stroke-linecap="round"></path>
+      <path d="M118 124A62 62 0 0 1 108 78" fill="none" stroke="#9FDCFF" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <div class="pilot-shade" id="pshade" hidden></div>
+  </div>
+  <div class="vig" aria-hidden="true"></div>
+
+  <div class="brief">
+    <div class="brief-card">
+      <p class="badge">意見調查・約 1 分鐘</p>
+      <h1 id="briefTitle"><span class="eyebrow">南瓜虛擬科技正在規劃</span><em>AI 中控企業版</em><br>想先聽你的意見</h1>
+      <p class="lede">一台電腦加一整套 AI 工具，帶回公司就能用。還沒開賣，功能和價格都還在規劃，所以想先問問你。</p>
+      <ol class="flow">
+        <li><b>01</b><span>先完成一段 20 秒的開場任務</span></li>
+        <li><b>02</b><span>再回答 4 題：想要哪些功能、價格合不合理、會不會考慮</span></li>
+      </ol>
+      <button type="button" class="cta" id="startBtn">開始任務</button>
+      <p class="fine">這是意見調查，不是訂購，不會產生任何費用。</p>
+      <button type="button" class="skip-link" id="skipBtn">直接填問卷</button>
+    </div>
+  </div>
+
+  <div class="mission">
+    <p class="m-kicker">意見調查・開場任務</p>
+    <p class="m-title">把一台 AI 中控送到你公司</p>
+  </div>
+
+  <div class="ui">
+    <div class="cargo" aria-hidden="true">
+      <span class="cargo-k">貨艙 <span id="cargoN">0/9</span></span>
+      <span id="cargoChips"></span>
+    </div>
+    <div class="log">
+      <p class="log-who">任務中心</p>
+      <p class="log-text" id="logText" aria-hidden="true"></p>
+      <p class="sr" id="logSR" aria-live="polite"></p>
+    </div>
+    <div class="thrust" aria-hidden="true"><span>推力</span><div class="bar"><i id="thrustBar"></i></div><b id="thrustPct">0%</b></div>
+    <ol class="steps" aria-label="出發前的三個步驟">
+      <li><button type="button" class="sbtn" id="b1" data-state="go"><span class="n">01</span><span class="t">啟動引擎</span><span class="s">按這裡</span></button></li>
+      <li><button type="button" class="sbtn" id="b2" data-state="lock"><span class="n">02</span><span class="t">鎖定你的公司</span><span class="s">等上一步</span></button></li>
+      <li><button type="button" class="sbtn" id="b3" data-state="lock"><span class="n">03</span><span class="t">裝載 AI 中控</span><span class="s">等上一步</span></button></li>
+    </ol>
+    <button type="button" class="warp" id="warpBtn" hidden aria-label="按住不放，曲速出發"><small>按住不放</small><b>曲速出發</b></button>
+  </div>
+  <div class="count" id="count" hidden></div>
+</section>
+
+<section class="scene" id="arrive" hidden aria-labelledby="arriveTitle">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="core-stage" id="coreStage" aria-hidden="true">
+    <div class="halo"></div>
+    <div class="orbit-ring"></div>
+    <div class="core"><div class="cube"><b></b><b></b><b></b><b></b><b></b><b></b><i></i></div></div>
+  </div>
+  <div class="arrive-ui">
+    <p class="pill">已送達。接下來是 4 題意見調查</p>
+    <h2 id="arriveTitle">我們在規劃的產品：一台電腦，就是你公司的 <em>AI 中控</em></h2>
+    <p class="lede">工具和資料放在你公司自己的電腦，AI 大腦用雲端的 Claude，南瓜在高雄幫你顧。</p>
+    <p class="soft">還沒開賣。想請你告訴我們：想要哪些功能、價格合不合理、會不會考慮。</p>
+    <button type="button" class="cta" id="signBtn">開始填問卷（4 題，約 1 分鐘）</button>
+  </div>
+</section>
+
+<main class="page" id="survey" hidden>
+  <p class="preview" id="previewBanner" hidden>預覽版：這裡填的內容不會真的送出。</p>
+
+  <form id="wizard" novalidate>
+    <nav class="trip" aria-label="填答進度">
+      <div class="track"></div><div class="fill" id="tripFill"></div>
+      <ol><li>挑功能</li><li>看價格</li><li>你的想法</li><li>保持聯絡</li></ol>
+      <svg class="ship" id="ship" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 12 4 4.5 7.5 12 4 19.5z"/></svg>
+    </nav>
+
+    <section class="step" data-step="0">
+      <h2 tabindex="-1"><span class="kicker">意見調查 1 / 4</span>你最想先讓 AI 幫你或公司做哪幾件事？</h2>
+      <p class="hint">可以複選；還不確定也可以先跳過。</p>
+      <div class="cards two" id="modules" role="group" aria-label="想要的功能"></div>
+      <label class="field" for="modulesOther">還有想讓 AI 做的事（選填）
+        <input type="text" id="modulesOther" maxlength="200" placeholder="例如：自動整理報價單">
+      </label>
+      <div class="nav"><button type="button" class="btn next" id="next0">下一步</button></div>
+    </section>
+
+    <section class="step" data-step="1" hidden>
+      <h2 tabindex="-1"><span class="kicker">意見調查 2 / 4</span>如果推出，我們想這樣定價。你覺得呢？</h2>
+      <p class="hint">每個方案點一下：太便宜、合理，還是太貴。</p>
+      <div class="plans" id="plans"></div>
+      <p class="note">買斷方案含第一年維運；第二年起，維運年費約為建置費的 15–20%。AI 用量用公司自己的帳號，實報實銷。</p>
+      <label class="field" for="priceNote">你心中合理的價格或付費方式（選填）
+        <input type="text" id="priceNote" maxlength="300" placeholder="例如：15 萬以內，或想要月付">
+      </label>
+      <div class="nav"><button type="button" class="btn back">上一步</button><button type="button" class="btn next">下一步</button></div>
+    </section>
+
+    <section class="step" data-step="2" hidden>
+      <h2 tabindex="-1"><span class="kicker">意見調查 3 / 4</span>如果南瓜推出這個方案，你會考慮導入嗎？</h2>
+      <div class="cards" id="intent" role="radiogroup" aria-label="導入意願"></div>
+      <fieldset class="group">
+        <legend>最可能選哪個方案？</legend>
+        <div class="chips" id="planChoice"></div>
+      </fieldset>
+      <fieldset class="group">
+        <legend>公司規模</legend>
+        <div class="chips" id="size"></div>
+      </fieldset>
+      <label class="field" for="industry">產業
+        <select id="industry"><option value="">請選擇（選填）</option></select>
+      </label>
+      <p class="error" id="err2" role="alert" hidden>請先選一個：會不會考慮導入。</p>
+      <div class="nav"><button type="button" class="btn back">上一步</button><button type="button" class="btn next">下一步</button></div>
+    </section>
+
+    <section class="step" data-step="3" hidden>
+      <h2 tabindex="-1"><span class="kicker">意見調查 4 / 4・選填</span>想第一時間知道消息嗎？</h2>
+      <p class="hint">留下聯絡方式，正式推出時我們會先通知你。不想留，也可以直接送出。</p>
+      <div class="grid2">
+        <label class="field" for="contactName">稱呼<input type="text" id="contactName" maxlength="60" autocomplete="name"></label>
+        <label class="field" for="company">公司<input type="text" id="company" maxlength="100" autocomplete="organization"></label>
+        <label class="field" for="jobTitle">職稱<input type="text" id="jobTitle" maxlength="60" autocomplete="organization-title"></label>
+        <label class="field" for="phoneOrLine">手機或 LINE ID<input type="text" id="phoneOrLine" maxlength="60" autocomplete="tel"></label>
+      </div>
+      <label class="field" for="email">Email<input type="email" id="email" maxlength="120" autocomplete="email" inputmode="email"></label>
+      <p class="note">留下聯絡方式，就代表同意南瓜虛擬科技用這些資料，跟你聯絡這個方案的消息；不另作他用，也不提供給第三方。</p>
+      <label class="field" for="comment">還想跟南瓜說什麼？（選填）
+        <textarea id="comment" rows="3" maxlength="1000"></textarea>
+      </label>
+      <div class="hp" aria-hidden="true"><label for="website">網站</label><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
+      <p class="error" id="err3" role="alert" hidden></p>
+      <div class="nav"><button type="button" class="btn back">上一步</button><button type="submit" class="btn" id="submitBtn">送出意見</button></div>
+    </section>
+  </form>
+
+  <footer class="foot">這是意見調查，不是訂購，不會產生任何費用。<br>南瓜虛擬科技｜高雄</footer>
+</main>
+
+<section class="page" id="done" hidden aria-labelledby="doneTitle">
+  <p class="stamp" aria-hidden="true">已送出</p>
+  <h2 class="done-title" id="doneTitle" tabindex="-1">收到，謝謝你的意見！</h2>
+  <p class="lede" id="doneMsg">你的意見會直接影響我們怎麼定價、先做哪些功能。</p>
+  <div class="contact">
+    <p class="c-k">想直接聊聊</p>
+    <p class="c-name">廖翊翔 Peter｜南瓜虛擬科技 執行長</p>
+    <p class="c-mail"><span id="mailText">Peter@pumpkinvrar.com</span><button type="button" class="mini" id="copyMail">複製</button></p>
+    <p><a href="https://pumpkinvr.com" target="_blank" rel="noopener">pumpkinvr.com</a></p>
+  </div>
+  <p class="lede small">活動現場也歡迎直接找我聊。</p>
+  <button type="button" class="again" id="againBtn">再玩一次開場動畫</button>
+  <footer class="foot">這是意見調查，不是訂購，不會產生任何費用。<br>南瓜虛擬科技｜高雄</footer>
+</section>
+
+<script>
+(() => {
+  'use strict';
+
+  /* 上線設定：部署時填入 Supabase 專案網址與 anon（publishable）key。留空就是預覽模式，不會送出。sound 是聲音預設開或關。 */
+  const CONFIG = {
+    supabaseUrl: '',
+    supabaseKey: '',
+    schema: 'public',
+    table: 'ai_offer_feedback',
+    source: 'e-show-2026',
+    sound: false
+  };
+
+  /* 要改功能清單或價格，改下面這幾段就好。 */
+  const MODULES = [
+    { key: 'meeting', short: '會議', title: '會議紀錄', desc: '錄音、逐字稿、AI 摘要，會後自動派單' },
+    { key: 'stock', short: '股票', title: '股票分析', desc: '每天自動整理你關注的股票：新聞、財報重點' },
+    { key: 'video', short: '影片', title: 'AI 生成影片', desc: '打一句中文，AI 直接生成影片' },
+    { key: 'shorts', short: '剪輯', title: '短影音剪輯', desc: '長影片自動剪成短影音、上字幕' },
+    { key: 'tender', short: '標案', title: '標案雷達', desc: '每天自動找標案，早上寄給同仁' },
+    { key: 'website', short: '官網', title: '官網監測', desc: '看懂誰在找你、哪些 AI 讀過官網' },
+    { key: 'brain', short: '大腦', title: '公司知識大腦', desc: '文件、筆記存進來，問了就答' },
+    { key: 'assistant', short: '助理', title: 'AI 助理', desc: '用聊天軟體交辦，名片拍照就建檔' },
+    { key: 'ai_coaching', short: '教學', title: '一對一 AI 教學', desc: 'Claude／GPT／Gemini，一對一教到會用' }
+  ];
+  const PLANS = [
+    { key: 'entry', name: '入門', price: '19.8', unit: '萬', includes: ['主機＋AI 助理', '2 個標準功能模組', '一對一 AI 教學 1 次'] },
+    { key: 'standard', name: '標準', tag: '主推', price: '25', unit: '萬', includes: ['入門的全部內容', '3–4 個功能模組，依你的流程調整', '舊資料匯入', '一對一 AI 教學 2 次（Claude／GPT／Gemini）'] },
+    { key: 'advanced', name: '進階', price: '39.8', unit: '萬', suffix: '起', includes: ['標準的全部內容', '客製化工具 1 個，依你的需求打造'] },
+    { key: 'rental', name: '月租', price: '9,900', unit: '元／月', includes: ['3 年約，含主機與維運', 'AI 用量另計'] }
+  ];
+  const RATES = [['low', '太便宜'], ['fair', '合理'], ['high', '太貴']];
+  const REACT = { low: '記下了：可以再貴一點。', fair: '記下了：這個價格可以接受。', high: '記下了：要再便宜才會考慮。' };
+  const INTENTS = [
+    ['first_batch', '會，想當首批試用', '正式推出前，我們會先找你'],
+    ['learn_more', '有興趣，想先多了解', '可以先約時間聊聊'],
+    ['wait', '先觀望', '想先看看別人用起來怎麼樣'],
+    ['no_need', '目前用不到', '也謝謝你給意見']
+  ];
+  const PLAN_CHOICES = [['entry', '入門'], ['standard', '標準'], ['advanced', '進階'], ['rental', '月租'], ['unsure', '還不確定']];
+  const SIZES = [['1-10', '個人～10 人'], ['11-50', '11–50 人'], ['51-200', '51–200 人'], ['200+', '200 人以上']];
+  const INDUSTRIES = ['製造業', '營建工程', '醫療照護', '貿易零售', '餐飲服務', '科技資訊', '顧問服務', '其他'];
+  /* 目的地：高雄的經緯度，鎖定時地球會轉到這裡。 */
+  const DEST = { lat: 22.63, lon: 120.3 };
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const reduce = Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const live = Boolean(CONFIG.supabaseUrl && CONFIG.supabaseKey);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  let mode = 'cockpit', submitted = false, run = 0, sayTimer = 0;
+  let W = 0, H = 0, raf = 0, last = 0;
+  let orbitOn = false, orbitT0 = 0;
+  let charging = false, charge = 0, launched = false, lastBuzz = 0, locked = false;
+
+  /* ---------- 震動 ---------- */
+  let iosTick = null;
+  const buzz = pattern => {
+    try {
+      if (navigator.vibrate) { navigator.vibrate(pattern); return; }
+      if (!iosTick) {
+        iosTick = document.createElement('label');
+        iosTick.setAttribute('aria-hidden', 'true');
+        iosTick.style.display = 'none';
+        const sw = document.createElement('input');
+        sw.type = 'checkbox';
+        sw.setAttribute('switch', '');
+        iosTick.appendChild(sw);
+        document.body.appendChild(iosTick);
+      }
+      iosTick.click();
+    } catch (err) { /* 沒有震動功能的裝置直接略過 */ }
+  };
+
+  /* ---------- 聲音（全部即時合成，沒有音檔） ---------- */
+  const A = { on: false, ctx: null, master: null };
+  const ac = () => {
+    if (!A.on) return null;
+    if (!A.ctx) {
+      const C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return null;
+      A.ctx = new C();
+      A.master = A.ctx.createGain();
+      A.master.gain.value = 0.5;
+      A.master.connect(A.ctx.destination);
+    }
+    if (A.ctx.state === 'suspended') A.ctx.resume();
+    return A.ctx;
+  };
+  const tone = (f, d, type, v, t0, f2) => {
+    const c = ac(); if (!c) return;
+    const o = c.createOscillator(), g = c.createGain(), t = c.currentTime + (t0 || 0);
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(f, t);
+    if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(v || 0.15, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g); g.connect(A.master);
+    o.start(t); o.stop(t + d + 0.05);
+  };
+  const noise = (d, v, t0, lp, lp2) => {
+    const c = ac(); if (!c) return;
+    const n = Math.floor(c.sampleRate * d), buf = c.createBuffer(1, n, c.sampleRate), ch = buf.getChannelData(0);
+    for (let i = 0; i < n; i += 1) ch[i] = Math.random() * 2 - 1;
+    const s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(), t = c.currentTime + (t0 || 0);
+    s.buffer = buf;
+    f.type = 'lowpass';
+    f.frequency.setValueAtTime(lp || 1200, t);
+    if (lp2) f.frequency.exponentialRampToValueAtTime(lp2, t + d);
+    g.gain.setValueAtTime(v || 0.2, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    s.connect(f); f.connect(g); g.connect(A.master);
+    s.start(t);
+  };
+  let hum = null, chg = null;
+  const humStart = () => {
+    const c = ac(); if (!c || hum) return;
+    const g = c.createGain(), f = c.createBiquadFilter();
+    g.gain.setValueAtTime(0.0001, c.currentTime);
+    g.gain.linearRampToValueAtTime(0.07, c.currentTime + 0.9);
+    f.type = 'lowpass'; f.frequency.value = 240;
+    const os = [55, 82.5, 110.3].map(fr => { const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = fr; o.connect(f); o.start(); return o; });
+    f.connect(g); g.connect(A.master);
+    hum = { g, os };
+  };
+  const humStop = () => {
+    const h = hum; hum = null;
+    if (!h || !A.ctx) return;
+    h.g.gain.cancelScheduledValues(A.ctx.currentTime);
+    h.g.gain.setTargetAtTime(0, A.ctx.currentTime, 0.15);
+    setTimeout(() => h.os.forEach(o => { try { o.stop(); } catch (err) { /* 已停止 */ } }), 700);
+  };
+  const chargeStart = () => {
+    const c = ac(); if (!c || chg) return;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = 'sawtooth'; o.frequency.value = 90; g.gain.value = 0.0001;
+    o.connect(g); g.connect(A.master); o.start();
+    chg = { o, g };
+  };
+  const chargeSet = p => {
+    if (!chg || !A.ctx) return;
+    const t = A.ctx.currentTime;
+    chg.o.frequency.setTargetAtTime(90 + p * p * 900, t, 0.03);
+    chg.g.gain.setTargetAtTime(0.02 + p * 0.08, t, 0.03);
+  };
+  const chargeStop = () => {
+    const c = chg; chg = null;
+    if (!c || !A.ctx) return;
+    c.g.gain.setTargetAtTime(0, A.ctx.currentTime, 0.05);
+    setTimeout(() => { try { c.o.stop(); } catch (err) { /* 已停止 */ } }, 300);
+  };
+  const NOTES = [523, 587, 659, 784, 880, 1047, 1175];
+  const sfx = {
+    click() { tone(700, 0.05, 'triangle', 0.1); },
+    nope() { tone(190, 0.1, 'square', 0.08); tone(140, 0.14, 'square', 0.08, 0.1); },
+    engine() { tone(70, 0.85, 'sawtooth', 0.16, 0, 420); noise(0.7, 0.3, 0.8, 500, 90); humStart(); },
+    scan() { tone(1200, 1.2, 'sine', 0.06, 0, 500); },
+    lock() { tone(880, 0.07, 'square', 0.08); tone(1108, 0.07, 'square', 0.08, 0.09); tone(1318, 0.07, 'square', 0.08, 0.18); tone(1760, 0.4, 'sine', 0.12, 0.3); },
+    note(i) { tone(NOTES[i % NOTES.length], 0.16, 'triangle', 0.14); noise(0.03, 0.08, 0, 7000); },
+    count(go) { if (go) tone(880, 0.45, 'square', 0.14); else tone(440, 0.12, 'square', 0.12); },
+    warp() { noise(1.7, 0.4, 0, 400, 9000); tone(110, 1.6, 'sawtooth', 0.12, 0, 1900); },
+    arrive() { [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.9, 'sine', 0.1, i * 0.09)); noise(0.5, 0.06, 0.1, 9000); },
+    rate(v) {
+      if (v === 'low') { tone(784, 0.09, 'triangle', 0.12); tone(988, 0.14, 'triangle', 0.12, 0.08); }
+      else if (v === 'fair') { tone(660, 0.09, 'sine', 0.14); tone(880, 0.18, 'sine', 0.14, 0.09); }
+      else { tone(300, 0.12, 'triangle', 0.14); tone(220, 0.2, 'triangle', 0.14, 0.1); }
+    },
+    whoosh() { noise(0.25, 0.12, 0, 600, 5000); },
+    success() { [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, 0.5, 'triangle', 0.14, i * 0.08)); noise(0.6, 0.08, 0.3, 10000); }
+  };
+  const soundBtn = $('#soundBtn');
+  const setSound = on => {
+    A.on = on;
+    soundBtn.setAttribute('aria-pressed', String(on));
+    soundBtn.textContent = on ? '聲音：開' : '聲音：關';
+    if (!on) { humStop(); chargeStop(); }
+    try { localStorage.setItem('pk-sound', on ? '1' : '0'); } catch (err) { /* 存不了就算了 */ }
+  };
+  let savedSound = null;
+  try { savedSound = localStorage.getItem('pk-sound'); } catch (err) { savedSound = null; }
+  setSound(savedSound === null ? Boolean(CONFIG.sound) : savedSound === '1');
+  soundBtn.addEventListener('click', () => { setSound(!A.on); buzz(12); sfx.click(); });
+
+  /* ---------- 即時地球（WebGL，NASA 的白天與夜晚影像） ---------- */
+  const cockpit = $('#cockpit');
+  const cam = $('#cam');
+  const earthCv = $('#earth');
+  const E = { gl: null, ready: false, n: 0, u: null, lam: -35, phi: 14, zoom: 1, cx: 0, cy: 0, r: 0, spin: true };
+  const tweens = [];
+  const easeIO = k => (k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2);
+  const tween = (obj, key, to, ms, ease) => {
+    for (let i = tweens.length - 1; i >= 0; i -= 1) if (tweens[i].obj === obj && tweens[i].key === key) tweens.splice(i, 1);
+    if (reduce) { obj[key] = to; return; }
+    tweens.push({ obj, key, from: obj[key], to, t0: performance.now(), dur: ms, ease: ease || easeIO });
+  };
+  const stepTweens = now => {
+    for (let i = tweens.length - 1; i >= 0; i -= 1) {
+      const w = tweens[i];
+      const k = Math.min(1, Math.max(0, (now - w.t0) / w.dur));
+      w.obj[w.key] = w.from + (w.to - w.from) * w.ease(k);
+      if (k >= 1) tweens.splice(i, 1);
+    }
+  };
+  const initEarth = () => {
+    let gl = null;
+    try { gl = earthCv.getContext('webgl', { alpha: true, antialias: true }) || earthCv.getContext('experimental-webgl', { alpha: true }); } catch (err) { gl = null; }
+    if (!gl) return;
+    const hp = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
+    const prec = hp && hp.precision > 0 ? 'highp' : 'mediump';
+    const VS = 'attribute vec3 aPos;attribute vec2 aUv;uniform mat3 uRot;uniform vec2 uCenter;uniform vec2 uScale;varying vec2 vUv;varying vec3 vN;void main(){vec3 p=uRot*aPos;vN=p;vUv=aUv;gl_Position=vec4(p.x*uScale.x+uCenter.x,p.y*uScale.y+uCenter.y,-p.z*0.5,1.0);}';
+    const FS = 'precision ' + prec + ' float;uniform sampler2D uDay;uniform sampler2D uNight;uniform vec3 uSun;varying vec2 vUv;varying vec3 vN;void main(){vec3 n=normalize(vN);float d=dot(n,uSun);float day=smoothstep(-0.18,0.32,d);vec3 dc=texture2D(uDay,vUv).rgb;vec3 nc=texture2D(uNight,vUv).rgb;vec3 c=dc*(0.06+1.08*day)+nc*(1.0-day)*1.6;float fr=pow(1.0-clamp(n.z,0.0,1.0),2.6);c+=vec3(0.30,0.60,1.0)*fr*(0.22+0.9*day);gl_FragColor=vec4(c,1.0);}';
+    const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; };
+    const v = sh(gl.VERTEX_SHADER, VS), f = sh(gl.FRAGMENT_SHADER, FS);
+    if (!v || !f) return;
+    const pr = gl.createProgram();
+    gl.attachShader(pr, v); gl.attachShader(pr, f); gl.linkProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
+    gl.useProgram(pr);
+    const LAT = 48, LON = 96, pos = [], uv = [], idx = [];
+    for (let i = 0; i <= LAT; i += 1) {
+      const vv = i / LAT, ph = (0.5 - vv) * Math.PI;
+      for (let j = 0; j <= LON; j += 1) {
+        const uu = j / LON, la = (uu - 0.5) * 2 * Math.PI;
+        pos.push(Math.cos(ph) * Math.sin(la), Math.sin(ph), Math.cos(ph) * Math.cos(la));
+        uv.push(uu, vv);
+      }
+    }
+    for (let i = 0; i < LAT; i += 1) {
+      for (let j = 0; j < LON; j += 1) {
+        const a = i * (LON + 1) + j, b = a + LON + 1;
+        idx.push(a, b, a + 1, b, b + 1, a + 1);
+      }
+    }
+    const attr = (data, name, size) => {
+      const loc = gl.getAttribLocation(pr, name), b = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, b);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0);
+    };
+    attr(pos, 'aPos', 3);
+    attr(uv, 'aUv', 2);
+    const ib = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(idx), gl.STATIC_DRAW);
+    E.n = idx.length;
+    E.u = { rot: gl.getUniformLocation(pr, 'uRot'), center: gl.getUniformLocation(pr, 'uCenter'), scale: gl.getUniformLocation(pr, 'uScale') };
+    const sl = Math.hypot(-0.55, 0.38, 0.74);
+    gl.uniform3f(gl.getUniformLocation(pr, 'uSun'), -0.55 / sl, 0.38 / sl, 0.74 / sl);
+    gl.enable(gl.DEPTH_TEST);
+    gl.clearColor(0, 0, 0, 0);
+    const maxTex = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    let loaded = 0;
+    const tex = (unit, src, name) => {
+      const im = new Image();
+      im.onload = () => {
+        try {
+          if (im.width > maxTex) return;
+          const t = gl.createTexture();
+          gl.activeTexture(gl.TEXTURE0 + unit);
+          gl.bindTexture(gl.TEXTURE_2D, t);
+          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im);
+          gl.generateMipmap(gl.TEXTURE_2D);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          gl.uniform1i(gl.getUniformLocation(pr, name), unit);
+          loaded += 1;
+          if (loaded === 2) { E.ready = true; cockpit.classList.add('earth-ready'); kick(); }
+        } catch (err) { /* 貼圖失敗就維持備用的漸層地球 */ }
+      };
+      im.src = src;
+    };
+    tex(0, 'img/earth-day.jpg', 'uDay');
+    tex(1, 'img/earth-night.jpg', 'uNight');
+    E.gl = gl;
+  };
+  /* 駕駛艙照片 img/cabin.webp（視窗已去背）裡各部位的位置，單位是照片的像素：
+     vx0–vx1 手機上要露出的左右範圍、deck 儀表台上緣、ecy／er 地球的中心高度與半徑、wl／wb 視窗左下角。 */
+  const CAB = { w: 1024, h: 1536, vx0: 112, vx1: 912, deck: 910, ecy: 520, er: 315, wl: 200, wb: 880, wx0: 136, wx1: 888, wy0: 181, wy1: 894, u0: 409, u1: 619 };
+  const S = { cab: false, s: 1, k: 0, x: 0, cx: 0, cy: 0, base: 0, deck: 0 };
+  /* 寬螢幕的大視窗：照片中間那一段（u0–u1，剛好一顆螺絲的間距）可以無縫重複，重複幾次（S.k）就把視窗加寬幾段。 */
+  const drawCabin = (iw, ih) => {
+    const cv = $('#cabinCv'), im = $('#cabin');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), k = S.s * dpr;
+    const cw = Math.round(iw * dpr), chh = Math.round(ih * dpr);
+    if (cv.width !== cw || cv.height !== chh || cv.dataset.k !== String(S.k)) {
+      cv.width = cw; cv.height = chh; cv.dataset.k = String(S.k);
+      const c = cv.getContext('2d');
+      c.imageSmoothingQuality = 'high';
+      const cuts = [[0, CAB.u0]];
+      for (let i = 0; i <= S.k; i += 1) cuts.push([CAB.u0, CAB.u1]);
+      cuts.push([CAB.u1, CAB.w]);
+      let x = 0;
+      cuts.forEach(([a, b]) => {
+        const d0 = Math.round(x * k), d1 = Math.round((x + b - a) * k);
+        c.drawImage(im, a, 0, b - a, CAB.h, d0, 0, d1 - d0, chh);
+        x += b - a;
+      });
+    }
+    cv.hidden = false;
+    cv.style.left = px(S.x); cv.style.width = px(iw); cv.style.height = px(ih);
+  };
+  const px = v => v.toFixed(1) + 'px';
+  const layoutScene = () => {
+    if (S.cab) {
+      /* 由下往上排：最下面是你的操作台（.ui），上面留一段放儀表與太空人，再上面才是視窗。 */
+      const ch = $('.ui', cockpit).offsetHeight || 290, top = H - ch;
+      const gap = Math.max(70, Math.min(110, H * 0.13));
+      const sh0 = (H - ch - gap) / CAB.deck, up = CAB.u1 - CAB.u0, vis = CAB.vx1 - CAB.vx0;
+      S.k = Math.max(0, Math.floor((W / sh0 - vis) / up));
+      S.s = Math.min(sh0, W / (vis + up * S.k));
+      const wide = up * S.k, iw = (CAB.w + wide) * S.s, ih = CAB.h * S.s, side = Math.max(0, (W - iw) / 2);
+      S.x = (W - iw) / 2;
+      S.cx = W / 2; S.cy = CAB.ecy * S.s; S.base = CAB.er * S.s; S.deck = CAB.deck * S.s;
+      drawCabin(iw, ih);
+      [$('#cabL'), $('#cabR')].forEach((el, k) => {
+        el.hidden = side < 1;
+        if (side < 1) return;
+        el.style.cssText = `left:${px(k ? S.x + iw - 2 : S.x)};width:2px;height:${px(ih)};background-size:${px(CAB.w * S.s)} ${px(ih)};background-position:${k ? 'right' : 'left'} top;transform-origin:${k ? 'left' : 'right'} top;transform:scaleX(${((side + 2) / 2).toFixed(3)})`;
+      });
+      $('#cabShade').hidden = side < 40;
+      const cb = $('#cabB');
+      cb.hidden = ih >= H;
+      if (ih < H) cb.style.height = px(H - ih + 1);
+      const mo = $('#moon'), mr = Math.max(3, S.base * 0.035);
+      mo.hidden = S.k < 2;
+      mo.style.cssText = `left:${px(S.cx + S.base * 2.3 - mr)};top:${px(S.cy - S.base * 0.62 - mr)};width:${px(mr * 2)};height:${px(mr * 2)}`;
+      const gl = $('#glass');
+      gl.hidden = false;
+      gl.style.cssText = `left:${px(S.x + CAB.wx0 * S.s)};top:${px(CAB.wy0 * S.s)};width:${px((CAB.wx1 - CAB.wx0 + wide) * S.s)};height:${px((CAB.wy1 - CAB.wy0) * S.s)}`;
+      $('.mission', cockpit).style.top = px(CAB.wy0 * S.s + 12);
+      const sw = Math.min(W - 20, 600), sh = Math.max(54, Math.min(86, top - S.deck - 20));
+      const mf = $('#mfd');
+      mf.hidden = false;
+      mf.style.cssText = `left:${px((W - sw) / 2)};top:${px(S.deck + 6)};width:${px(sw)};height:${px(sh)}`;
+      mf.classList.toggle('compact', sh < 72);
+      const p = $('.pilot', cockpit);
+      if (p) {
+        const ph = Math.min((top - S.deck) / 0.48, Math.min(W * 0.78, 400) * 0.743), pw = ph / 0.743, pt = top - ph * 0.88;
+        p.style.width = px(pw);
+        p.style.top = px(pt);
+        const sd = $('#pshade');
+        sd.hidden = p.tagName !== 'IMG';
+        sd.style.cssText = `left:${px((W - pw) / 2)};top:${px(pt)};width:${px(pw)};height:${px(ph)}`;
+      }
+    } else {
+      const top = 56, deck = H - Math.max(330, H * 0.4), avail = Math.max(120, deck - top);
+      S.cx = W / 2; S.cy = top + avail * 0.56; S.base = Math.min(W * 0.5, avail * 0.54); S.deck = deck;
+    }
+    layoutEarth();
+  };
+  const layoutEarth = () => {
+    E.cx = S.cx; E.cy = S.cy; E.r = S.base * E.zoom;
+    cockpit.style.setProperty('--ex', E.cx.toFixed(1) + 'px');
+    cockpit.style.setProperty('--ey', E.cy.toFixed(1) + 'px');
+    cockpit.style.setProperty('--er', E.r.toFixed(1) + 'px');
+  };
+  /* 儀表上的高度與速度：一開始在同步軌道的高度（看得到整顆地球），鎖定、出發時跟著畫面一路下降。 */
+  let altShown = -1;
+  const telemetry = () => {
+    const alt = Math.max(408, Math.round(35786 * Math.pow(E.zoom, -1.85)));
+    if (alt === altShown) return;
+    altShown = alt;
+    $('#altV').textContent = alt.toLocaleString('en-US') + ' km';
+    $('#velV').textContent = Math.sqrt(398600 / (6371 + alt)).toFixed(2) + ' km/s';
+  };
+  const drawEarth = () => {
+    const gl = E.gl;
+    if (!gl || !E.ready) return;
+    const t = -E.lam * Math.PI / 180, p = E.phi * Math.PI / 180;
+    const c = Math.cos(t), s = Math.sin(t), cp = Math.cos(p), sp = Math.sin(p);
+    gl.viewport(0, 0, earthCv.width, earthCv.height);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.uniformMatrix3fv(E.u.rot, false, new Float32Array([c, sp * s, -cp * s, 0, cp, sp, s, -sp * c, cp * c]));
+    gl.uniform2f(E.u.center, (E.cx / W) * 2 - 1, 1 - (E.cy / H) * 2);
+    gl.uniform2f(E.u.scale, (E.r * 2) / W, (E.r * 2) / H);
+    gl.drawElements(gl.TRIANGLES, E.n, gl.UNSIGNED_SHORT, 0);
+  };
+
+  /* ---------- 特效畫布：光束、火花、彩帶 ---------- */
+  const fx = $('#fx');
+  const g2 = fx.getContext('2d');
+  /* 曲速的光束畫在視窗後面那一層，才會被窗框和太空人擋住，不會蓋到艙內。 */
+  const wcv = $('#warpCv');
+  const g3 = wcv.getContext('2d');
+  const fit = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    fx.width = Math.round(W * dpr); fx.height = Math.round(H * dpr);
+    g2.setTransform(dpr, 0, 0, dpr, 0, 0);
+    wcv.width = Math.round(W * dpr); wcv.height = Math.round(H * dpr);
+    g3.setTransform(dpr, 0, 0, dpr, 0, 0);
+    earthCv.width = Math.round(W * dpr); earthCv.height = Math.round(H * dpr);
+    layoutScene();
+  };
+  const P = { bits: [], warp: null };
+
+  const burst = (x, y, n, o) => {
+    if (reduce) return;
+    const opt = Object.assign({ spread: Math.PI * 2, dir: -Math.PI / 2, speed: 420, grav: 900, size: 7, life: 1.4, shape: 'rect', colors: ['#FFC83D', '#F2F5FB', '#4FE3A1', '#7FE3FF', '#FF8F7A'] }, o || {});
+    for (let i = 0; i < n; i += 1) {
+      const a = opt.dir + (Math.random() - 0.5) * opt.spread, v = opt.speed * (0.35 + Math.random() * 0.65);
+      P.bits.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: opt.grav, life: 0, max: opt.life * (0.6 + Math.random() * 0.4), size: opt.size * (0.6 + Math.random() * 0.8), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 12, color: opt.colors[i % opt.colors.length], shape: opt.shape });
+    }
+    if (P.bits.length > 420) P.bits.splice(0, P.bits.length - 420);
+    kick();
+  };
+  const drawBits = dt => {
+    for (let i = P.bits.length - 1; i >= 0; i -= 1) {
+      const b = P.bits[i];
+      b.life += dt;
+      if (b.life > b.max) { P.bits.splice(i, 1); continue; }
+      b.vy += b.g * dt; b.x += b.vx * dt; b.y += b.vy * dt; b.rot += b.vr * dt;
+      g2.globalAlpha = Math.min(1, (1 - b.life / b.max) * 1.6);
+      g2.fillStyle = b.color;
+      if (b.shape === 'dot') { g2.beginPath(); g2.arc(b.x, b.y, b.size * 0.5, 0, 6.283); g2.fill(); }
+      else { g2.save(); g2.translate(b.x, b.y); g2.rotate(b.rot); g2.fillRect(-b.size / 2, -b.size * 0.3, b.size, b.size * 0.6); g2.restore(); }
+    }
+    g2.globalAlpha = 1;
+  };
+  const startWarp = (x, y, dur) => {
+    const beams = [];
+    for (let i = 0; i < 110; i += 1) beams.push({ a: Math.random() * 6.283, d: Math.random() * 80, v: 500 + Math.random() * 1400, w: 1 + Math.random() * 2.2, c: i % 5 === 0 ? '#FFE3A0' : (i % 2 ? '#FFFFFF' : '#9FE8FF') });
+    P.warp = { x, y, t: 0, dur, beams };
+    kick();
+  };
+  const clearWarp = () => { P.warp = null; g3.clearRect(0, 0, W, H); };
+  const drawWarp = dt => {
+    const w = P.warp;
+    w.t += dt;
+    g3.clearRect(0, 0, W, H);
+    const k = Math.min(1, w.t / w.dur), boost = 1 + k * k * 5, R = Math.hypot(W, H);
+    g3.globalCompositeOperation = 'lighter';
+    g3.lineCap = 'round';
+    w.beams.forEach(b => {
+      b.d += b.v * boost * dt;
+      if (b.d > R) { b.d = Math.random() * 40; b.a = Math.random() * 6.283; }
+      const len = 30 + b.d * (0.25 + k * 0.6), cx = Math.cos(b.a), sy = Math.sin(b.a);
+      g3.globalAlpha = Math.min(1, 0.25 + k);
+      g3.strokeStyle = b.c;
+      g3.lineWidth = b.w * (1 + k * 1.5);
+      g3.beginPath();
+      g3.moveTo(w.x + cx * b.d, w.y + sy * b.d);
+      g3.lineTo(w.x + cx * (b.d + len), w.y + sy * (b.d + len));
+      g3.stroke();
+    });
+    g3.globalAlpha = 1;
+    g3.globalCompositeOperation = 'source-over';
+    if (w.t >= w.dur + 0.25) clearWarp();
+  };
+
+  const ocs = [];
+  const stepOrbit = now => {
+    const t = (now - orbitT0) / 1000, grow = Math.min(1, t / 1.2), ease = 1 - Math.pow(1 - grow, 3);
+    const rx = Math.min(150, W * 0.38), ry = rx * 0.36;
+    ocs.forEach((el, i) => {
+      const a = t * 0.55 + i * (6.283 / ocs.length), d = (Math.sin(a) + 1) / 2;
+      el.style.transform = `translate(-50%,-50%) translate(${(Math.cos(a) * rx * ease).toFixed(1)}px,${(Math.sin(a) * ry * ease).toFixed(1)}px) scale(${(0.78 + d * 0.3).toFixed(3)})`;
+      el.style.opacity = ((0.45 + d * 0.55) * ease).toFixed(3);
+      el.style.zIndex = d > 0.5 ? 3 : 1;
+    });
+  };
+
+  const warpBtn = $('#warpBtn');
+  const stepCharge = dt => {
+    if (launched) return;
+    charge = Math.max(0, Math.min(1, charge + (charging ? dt / 1.5 : -dt / 0.5)));
+    warpBtn.style.setProperty('--p', charge.toFixed(3));
+    if (!reduce) {
+      const a = charge * 7;
+      cam.style.translate = charge > 0 ? `${((Math.random() - 0.5) * 2 * a).toFixed(1)}px ${((Math.random() - 0.5) * 2 * a).toFixed(1)}px` : '';
+    }
+    chargeSet(charge);
+    const now = performance.now();
+    if (charging && now - lastBuzz > 110) { lastBuzz = now; buzz(Math.round(8 + charge * 18)); }
+    if (charge >= 1) launch();
+  };
+
+  const loop = now => {
+    const raw = (now - last) / 1000 || 0, real = Math.min(0.25, raw), dt = Math.min(0.05, raw);
+    last = now;
+    g2.clearRect(0, 0, W, H);
+    let alive = false;
+    if (mode === 'cockpit') {
+      alive = E.ready || tweens.length > 0;
+      stepTweens(now);
+      if (E.spin && !reduce) E.lam -= real * 1.8;
+      layoutEarth();
+      telemetry();
+      drawEarth();
+    }
+    if (P.warp) { alive = true; drawWarp(dt); }
+    if (P.bits.length) { alive = true; drawBits(dt); }
+    if (orbitOn) { alive = true; stepOrbit(now); }
+    if (!launched && (charging || charge > 0)) { alive = true; stepCharge(Math.min(1, raw)); }
+    raf = alive ? requestAnimationFrame(loop) : 0;
+  };
+  function kick() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); } }
+
+  const shake = (el, ms, amp) => {
+    if (reduce) return;
+    const t0 = performance.now();
+    const f = now => {
+      const k = (now - t0) / ms;
+      if (k >= 1) { el.style.translate = ''; return; }
+      const a = amp * (1 - k);
+      el.style.translate = `${((Math.random() - 0.5) * 2 * a).toFixed(1)}px ${((Math.random() - 0.5) * 2 * a).toFixed(1)}px`;
+      requestAnimationFrame(f);
+    };
+    requestAnimationFrame(f);
+  };
+  const flash = soft => {
+    const f = $('#flash');
+    f.classList.remove('go', 'soft');
+    void f.offsetWidth;
+    if (soft) f.classList.add('soft');
+    f.classList.add('go');
+  };
+  const countTo = (el, from, to, ms, fmt) => {
+    if (reduce) { el.textContent = fmt(to); return; }
+    const t0 = performance.now();
+    const f = now => {
+      const k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(from + (to - from) * e);
+      if (k < 1) requestAnimationFrame(f);
+    };
+    requestAnimationFrame(f);
+  };
+
+  /* ---------- 第一幕：駕駛艙 ---------- */
+  const later = (fn, ms) => { const tk = run; setTimeout(() => { if (tk === run) fn(); }, reduce ? Math.min(ms, 120) : ms); };
+  const say = text => {
+    clearInterval(sayTimer);
+    $('#logSR').textContent = text;
+    const el = $('#logText');
+    if (reduce) { el.textContent = text; return; }
+    let i = 0;
+    el.textContent = '';
+    sayTimer = setInterval(() => { i += 1; el.textContent = text.slice(0, i); if (i >= text.length) clearInterval(sayTimer); }, 26);
+  };
+  const placeTarget = () => {
+    const r = $('#reticle');
+    r.style.setProperty('--rx', E.cx.toFixed(1) + 'px');
+    r.style.setProperty('--ry', E.cy.toFixed(1) + 'px');
+    const x0 = S.cab ? Math.max(S.x + CAB.wl * S.s + 6, S.cx - S.base * 1.7) : W * 0.1, y0 = S.cab ? CAB.wb * S.s : S.deck + 24;
+    $('#routePath').setAttribute('d', locked ? `M ${x0.toFixed(0)} ${y0.toFixed(0)} Q ${(x0 + W * 0.06).toFixed(0)} ${(E.cy + 36).toFixed(0)} ${E.cx.toFixed(0)} ${E.cy.toFixed(0)}` : '');
+  };
+  const inst = (k, text, on) => {
+    const el = $('#inst-' + k);
+    if (!el) return;
+    el.textContent = text;
+    el.parentNode.classList.toggle('on', Boolean(on));
+  };
+  window.addEventListener('resize', () => { fit(); placeTarget(); kick(); });
+
+  $('#cargoChips').outerHTML = MODULES.map(m => `<span class="cg">${esc(m.short)}</span>`).join('');
+  const b1 = $('#b1'), b2 = $('#b2'), b3 = $('#b3');
+  const setState = (b, st) => { b.dataset.state = st; $('.s', b).textContent = st === 'lock' ? '等上一步' : (st === 'go' ? '按這裡' : '完成'); };
+
+  const doEngine = () => {
+    setState(b1, 'on');
+    cockpit.classList.add('engine');
+    shake(cam, 750, 10);
+    buzz([30, 40, 60, 40, 140]);
+    sfx.engine();
+    $('#thrustBar').style.width = '100%';
+    countTo($('#thrustPct'), 0, 100, 1200, v => Math.round(v) + '%');
+    say('引擎啟動，推力全開。下一步：鎖定目的地。');
+    inst('eng', '運轉中', true);
+    setState(b2, 'go');
+  };
+  const doLock = () => {
+    setState(b2, 'on');
+    locked = true;
+    E.spin = false;
+    const d = ((DEST.lon - E.lam) % 360 + 540) % 360 - 180;
+    tween(E, 'lam', E.lam + d, 1600);
+    tween(E, 'phi', DEST.lat, 1600);
+    tween(E, 'zoom', 1.9, 1600);
+    placeTarget();
+    const r = $('#reticle');
+    r.classList.add('show');
+    buzz(18);
+    sfx.scan();
+    say('掃描地球中…');
+    kick();
+    later(() => {
+      r.classList.add('lock');
+      cockpit.classList.add('locked');
+      $('#dest').textContent = '台灣';
+      inst('nav', '台灣', true);
+      shake(cam, 260, 4);
+      buzz([15, 60, 15, 60, 50]);
+      sfx.lock();
+      say('目的地鎖定：台灣，你的公司。最後一步：把 AI 中控搬上船。');
+      setState(b3, 'go');
+    }, 1700);
+  };
+  const doCargo = () => {
+    setState(b3, 'on');
+    const chips = $$('.cg', cockpit);
+    let i = 0;
+    say('裝載中：會議紀錄、標案雷達、AI 助理…一個一個搬上船。');
+    const next = () => {
+      if (i < chips.length) {
+        chips[i].classList.add('on');
+        sfx.note(i);
+        buzz(12);
+        i += 1;
+        $('#cargoN').textContent = i + '/' + chips.length;
+        inst('cargo', i + '/' + chips.length, i === chips.length);
+        later(next, 160);
+        return;
+      }
+      cockpit.classList.add('ready');
+      warpBtn.hidden = false;
+      shake(cam, 300, 5);
+      buzz([20, 40, 60]);
+      say('貨艙裝滿了。按住下面的紅色按鈕，曲速出發。');
+    };
+    later(next, 250);
+  };
+  const press = b => {
+    const st = b.dataset.state;
+    if (st === 'on') return;
+    if (st === 'lock') {
+      b.classList.remove('nope');
+      void b.offsetWidth;
+      b.classList.add('nope');
+      buzz([20, 40, 20]);
+      sfx.nope();
+      const want = [b1, b2, b3].find(x => x.dataset.state === 'go');
+      if (want) say('還不行。先按「' + $('.t', want).textContent + '」。');
+      return;
+    }
+    if (b === b1) doEngine(); else if (b === b2) doLock(); else doCargo();
+  };
+  [b1, b2, b3].forEach(b => b.addEventListener('click', () => press(b)));
+
+  /* ---------- 第二幕：按住曲速 ---------- */
+  const startCharge = e => {
+    if (launched || charging) return;
+    if (e) e.preventDefault();
+    charging = true;
+    warpBtn.classList.add('hold');
+    chargeStart();
+    buzz(20);
+    kick();
+  };
+  const stopCharge = () => {
+    if (!charging) return;
+    charging = false;
+    warpBtn.classList.remove('hold');
+    if (!launched) { chargeStop(); say('還差一點，按住不要放。'); }
+  };
+  warpBtn.addEventListener('pointerdown', e => { try { warpBtn.setPointerCapture(e.pointerId); } catch (err) { /* 舊瀏覽器 */ } startCharge(e); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => warpBtn.addEventListener(t, stopCharge));
+  warpBtn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) startCharge(e); });
+  warpBtn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') stopCharge(); });
+  warpBtn.addEventListener('contextmenu', e => e.preventDefault());
+
+  function launch() {
+    launched = true;
+    charging = false;
+    charge = 0;
+    cam.style.translate = '';
+    warpBtn.classList.add('hold');
+    chargeStop();
+    cockpit.classList.add('launching');
+    say('曲速引擎啟動，抓穩了。');
+    const c = $('#count');
+    c.hidden = false;
+    const seq = ['3', '2', '1', 'GO'];
+    let i = 0;
+    const step = () => {
+      if (i < seq.length) {
+        c.innerHTML = '<span>' + seq[i] + '</span>';
+        sfx.count(i === 3);
+        buzz(i === 3 ? [60, 30, 120] : 35);
+        shake(cam, 320, 5 + i * 2);
+        i += 1;
+        later(step, 620);
+        return;
+      }
+      c.hidden = true;
+      doWarp();
+    };
+    step();
+  }
+  const doWarp = () => {
+    sfx.warp();
+    buzz([40, 30, 40, 30, 40, 30, 220]);
+    tween(E, 'zoom', E.zoom * 6, 1500, k => k * k * k);
+    startWarp(E.cx, E.cy, 1.5);
+    shake(cam, 1400, 6);
+    later(() => { flash(false); later(showArrive, 150); }, 1450);
+  };
+
+  /* ---------- 第三幕：送達 ---------- */
+  const stage = $('#coreStage');
+  MODULES.forEach(m => {
+    const el = document.createElement('span');
+    el.className = 'oc';
+    el.textContent = m.title;
+    stage.appendChild(el);
+    ocs.push(el);
+  });
+  const sizeOrbit = () => {
+    const rx = Math.min(150, W * 0.38), ry = rx * 0.36, ring = $('.orbit-ring', stage);
+    ring.style.setProperty('--orx', -rx + 'px');
+    ring.style.setProperty('--ory', -ry + 'px');
+    ring.style.setProperty('--orw', rx * 2 + 'px');
+    ring.style.setProperty('--orh', ry * 2 + 'px');
+  };
+  const showArrive = () => {
+    setMode('arrive');
+    const a = $('#arrive');
+    a.classList.remove('in');
+    void a.offsetWidth;
+    a.classList.add('in');
+    sizeOrbit();
+    orbitT0 = performance.now();
+    kick();
+    sfx.arrive();
+    buzz([20, 30, 20, 30, 90]);
+    burst(W / 2, H * 0.31, 40, { speed: 420, grav: 140, shape: 'dot', size: 5, life: 1.3, colors: ['#FFC83D', '#7FE3FF', '#FFFFFF'] });
+    later(() => $('#signBtn').focus({ preventScroll: true }), 1300);
+  };
+
+  /* ---------- 場景切換：跳過動畫、回到動畫 ---------- */
+  const scenes = { cockpit, arrive: $('#arrive'), survey: $('#survey'), done: $('#done') };
+  function setMode(m) {
+    mode = m;
+    Object.keys(scenes).forEach(k => { scenes[k].hidden = k !== m; });
+    const isIntro = m === 'cockpit' || m === 'arrive';
+    document.documentElement.classList.toggle('lock', isIntro);
+    $('#hud').classList.toggle('solid', !isIntro);
+    $('#sky').hidden = isIntro;
+    const jb = $('#jumpBtn');
+    jb.textContent = isIntro ? '跳過' : '回到開頭';
+    jb.classList.toggle('quiet', isIntro);
+    jb.hidden = m === 'arrive' || (m === 'cockpit' && !cockpit.classList.contains('started'));
+    orbitOn = m === 'arrive';
+    if (m !== 'cockpit') { humStop(); chargeStop(); }
+    window.scrollTo(0, 0);
+    kick();
+  }
+  const resetCockpit = () => {
+    run += 1;
+    clearInterval(sayTimer);
+    clearWarp();
+    tweens.length = 0;
+    launched = false; charging = false; charge = 0; locked = false;
+    E.zoom = 1; E.spin = true; E.lam = -35; E.phi = 14;
+    cockpit.classList.remove('engine', 'locked', 'ready', 'launching');
+    cam.style.translate = '';
+    const r = $('#reticle');
+    r.classList.remove('show', 'lock');
+    $('#routePath').setAttribute('d', '');
+    $('#dest').textContent = '未鎖定';
+    $$('.cg', cockpit).forEach(c => c.classList.remove('on'));
+    $('#cargoN').textContent = '0/' + MODULES.length;
+    inst('eng', '待命', false);
+    inst('nav', '未鎖定', false);
+    inst('cargo', '0/' + MODULES.length, false);
+    $('#thrustBar').style.width = '0';
+    $('#thrustPct').textContent = '0%';
+    setState(b1, 'go'); setState(b2, 'lock'); setState(b3, 'lock');
+    warpBtn.hidden = true;
+    warpBtn.classList.remove('hold');
+    warpBtn.style.setProperty('--p', '0');
+    $('#count').hidden = true;
+    layoutEarth();
+  };
+  const briefing = () => {
+    resetCockpit();
+    cockpit.classList.remove('started');
+    setMode('cockpit');
+  };
+  const startMission = () => {
+    resetCockpit();
+    cockpit.classList.add('started');
+    setMode('cockpit');
+    later(() => say('任務：把一台 AI 中控，從南瓜送到你公司。先按「啟動引擎」。'), 300);
+  };
+  const toSurvey = () => {
+    run += 1;
+    clearInterval(sayTimer);
+    clearWarp();
+    if (submitted) { setMode('done'); return; }
+    setMode('survey');
+    show(cur);
+    sfx.whoosh();
+  };
+  $('#startBtn').addEventListener('click', () => { buzz([15, 30, 40]); sfx.click(); startMission(); });
+  $('#skipBtn').addEventListener('click', () => { buzz(12); sfx.click(); toSurvey(); });
+  $('#jumpBtn').addEventListener('click', () => { buzz(12); sfx.click(); if (mode === 'cockpit' || mode === 'arrive') toSurvey(); else briefing(); });
+  $('#signBtn').addEventListener('click', () => { buzz([15, 30, 40]); sfx.click(); toSurvey(); });
+  $('#againBtn').addEventListener('click', () => { buzz(12); startMission(); });
+
+  /* 駕駛艙照片：載入成功就改用照片版的駕駛艙，載入失敗則維持內建畫的窗框與儀表台。 */
+  (() => {
+    const im = $('#cabin');
+    im.onload = () => {
+      S.cab = true;
+      cockpit.classList.add('has-cabin');
+      layoutScene();
+      placeTarget();
+      kick();
+    };
+    im.src = 'img/cabin.webp';
+  })();
+
+  /* 選配：把去背的太空人背影存成 img/astronaut.webp 或 img/astronaut.png 放進資料夾，就會取代內建的太空人。 */
+  (() => {
+    const tries = ['img/astronaut.webp', 'img/astronaut.png'];
+    const im = new Image();
+    im.onload = () => {
+      im.className = 'pilot';
+      im.alt = '坐在駕駛座上的太空人背影';
+      $('#pilot').replaceWith(im);
+      layoutScene();
+    };
+    im.onerror = () => { if (tries.length) im.src = tries.shift(); };
+    im.src = tries.shift();
+  })();
+
+  /* ---------- 問卷 ---------- */
+  if (!live) $('#previewBanner').hidden = false;
+
+  $('#modules').innerHTML = MODULES.map(m =>
+    `<label class="opt" for="mod-${m.key}"><input type="checkbox" id="mod-${m.key}" name="modules" value="${m.key}">` +
+    `<span class="t">${esc(m.title)}</span><span class="d">${esc(m.desc)}</span><span class="mark" aria-hidden="true"></span></label>`
+  ).join('');
+
+  $('#plans').innerHTML = PLANS.map(p =>
+    `<article class="plan${p.tag ? ' featured' : ''}" data-plan="${p.key}">` +
+    `<div class="plan-head"><h3>${esc(p.name)}</h3>${p.tag ? `<span class="tag">${esc(p.tag)}</span>` : ''}</div>` +
+    `<p class="price"><span class="num" data-price="${esc(p.price)}">${esc(p.price)}</span><span class="unit">${esc(p.unit)}</span>${p.suffix ? `<span class="suffix">${esc(p.suffix)}</span>` : ''}</p>` +
+    `<ul>${p.includes.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` +
+    `<fieldset class="rate"><legend>${esc(p.name)}方案的價格，你覺得？</legend><div class="seg">` +
+    RATES.map(([v, t]) => `<input type="radio" name="rate-${p.key}" id="rate-${p.key}-${v}" value="${v}"><label for="rate-${p.key}-${v}">${t}</label>`).join('') +
+    `</div></fieldset><p class="react" id="react-${p.key}" aria-live="polite"></p></article>`
+  ).join('');
+
+  $('#intent').innerHTML = INTENTS.map(([v, t, d]) =>
+    `<label class="opt radio" for="intent-${v}"><input type="radio" id="intent-${v}" name="intent" value="${v}">` +
+    `<span class="t">${esc(t)}</span><span class="d">${esc(d)}</span><span class="mark" aria-hidden="true"></span></label>`
+  ).join('');
+
+  const chipHtml = (name, list) => list.map(([v, t]) =>
+    `<label class="chip"><input type="radio" name="${name}" value="${v}"><span>${esc(t)}</span></label>`
+  ).join('');
+  $('#planChoice').innerHTML = chipHtml('plan', PLAN_CHOICES);
+  $('#size').innerHTML = chipHtml('size', SIZES);
+  $('#industry').insertAdjacentHTML('beforeend', INDUSTRIES.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join(''));
+
+  const form = $('#wizard');
+  const steps = $$('.step', form);
+  const marks = $$('.trip li', form);
+  let cur = 0, priced = false;
+
+  const pop = el => { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); };
+  const sparkAt = (el, n, o) => { const r = el.getBoundingClientRect(); burst(r.right - 26, r.top + 26, n, o); };
+
+  form.addEventListener('change', e => {
+    const t = e.target;
+    if (!t || !t.name) return;
+    const opt = t.closest('.opt');
+    if (opt) {
+      $$('.opt', form).forEach(l => l.classList.toggle('on', $('input', l).checked));
+      pop(opt);
+    }
+    if (t.name === 'modules') {
+      const n = $$('input[name="modules"]:checked', form).length;
+      $('#next0').textContent = n ? `下一步（已選 ${n} 項）` : '下一步';
+      buzz(t.checked ? [12, 30, 18] : 10);
+      if (t.checked) { sfx.note(n - 1); sparkAt(opt, 9, { speed: 220, grav: 500, size: 5, life: 0.7, shape: 'dot', colors: ['#FFC83D', '#FFE3A0', '#FFFFFF'] }); }
+      else sfx.click();
+    } else if (t.name.indexOf('rate-') === 0) {
+      const key = t.name.slice(5), card = t.closest('.plan');
+      card.classList.remove('r-low', 'r-fair', 'r-high');
+      card.classList.add('r-' + t.value);
+      pop(card);
+      $('#react-' + key).textContent = REACT[t.value];
+      buzz(t.value === 'high' ? [25, 40, 25] : 14);
+      sfx.rate(t.value);
+    } else if (t.name === 'intent') {
+      $('#err2').hidden = true;
+      buzz(t.value === 'first_batch' ? [15, 30, 15, 30, 60] : 14);
+      sfx.note(t.value === 'first_batch' ? 5 : 2);
+      if (t.value === 'first_batch') sparkAt(opt, 26, { speed: 380, grav: 700, life: 1.1 });
+    } else {
+      buzz(12);
+      sfx.click();
+    }
+  });
+
+  function show(i) {
+    cur = i;
+    steps.forEach((s, k) => {
+      s.hidden = k !== i;
+      s.classList.remove('in');
+      if (k === i) { void s.offsetWidth; s.classList.add('in'); }
+    });
+    marks.forEach((m, k) => {
+      m.classList.toggle('done', k < i);
+      m.classList.toggle('cur', k === i);
+      if (k === i) m.setAttribute('aria-current', 'step'); else m.removeAttribute('aria-current');
+    });
+    const pct = (i / (steps.length - 1)) * 100 + '%';
+    $('#tripFill').style.width = pct;
+    $('#sky').style.setProperty('--sx', (-i * 70) + 'px');
+    $('#ship').style.left = pct;
+    if (i === 1 && !priced) {
+      priced = true;
+      $$('.price .num', form).forEach(el => {
+        const raw = el.dataset.price, to = parseFloat(raw.replace(/,/g, '')), dec = (raw.split('.')[1] || '').length, comma = raw.indexOf(',') >= 0;
+        countTo(el, 0, to, 800, v => (comma ? Math.round(v).toLocaleString('en-US') : v.toFixed(dec)));
+      });
+    }
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    const h = $('h2', steps[i]);
+    if (h) h.focus({ preventScroll: true });
+  }
+
+  const picked = name => { const el = form.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; };
+  const text = id => { const v = $('#' + id).value.trim(); return v || null; };
+
+  steps.forEach((s, i) => {
+    const next = $('.next', s), back = $('.back', s);
+    if (next) next.addEventListener('click', () => {
+      if (i === 2 && !picked('intent')) {
+        $('#err2').hidden = false;
+        buzz([20, 40, 20]);
+        sfx.nope();
+        $('#intent').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        return;
+      }
+      buzz(14);
+      sfx.whoosh();
+      show(i + 1);
+    });
+    if (back) back.addEventListener('click', () => { buzz(10); sfx.click(); show(i - 1); });
+  });
+
+  const err3 = $('#err3');
+  const fail = msg => { err3.textContent = msg; err3.hidden = false; buzz([20, 40, 20]); sfx.nope(); };
+
+  const done = p => {
+    submitted = true;
+    setMode('done');
+    if (p && p.intent === 'first_batch' && p.consent) {
+      $('#doneMsg').textContent = '你的意見會直接影響我們怎麼定價、先做哪些功能。正式推出前，我們會先跟你聯絡。';
+    }
+    flash(true);
+    shake($('#done'), 420, 7);
+    buzz([30, 40, 30, 40, 30, 40, 180]);
+    sfx.success();
+    burst(W * 0.15, H * 0.92, 70, { dir: -1.15, spread: 1.1, speed: 950, grav: 1100, life: 1.9 });
+    burst(W * 0.85, H * 0.92, 70, { dir: -1.99, spread: 1.1, speed: 950, grav: 1100, life: 1.9 });
+    setTimeout(() => burst(W * 0.5, H * 0.3, 60, { speed: 520, grav: 700, life: 1.6 }), 380);
+    $('#doneTitle').focus({ preventScroll: true });
+  };
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (cur !== 3) return;
+    err3.hidden = true;
+    if (!picked('intent')) { show(2); $('#err2').hidden = false; return; }
+    if ($('#website').value) { done(null); return; }
+
+    const contact = {
+      contact_name: text('contactName'),
+      company: text('company'),
+      job_title: text('jobTitle'),
+      phone_or_line: text('phoneOrLine'),
+      email: text('email')
+    };
+    const hasContact = Object.values(contact).some(Boolean);
+    if (contact.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email)) { fail('Email 的格式好像不太對，請再檢查一下。'); return; }
+
+    /* 有留聯絡方式就視為同意聯絡（頁面上有寫明），資料表的 consent 欄位跟著記成 true。 */
+    const payload = Object.assign({
+      source: CONFIG.source,
+      modules: $$('input[name="modules"]:checked', form).map(el => el.value),
+      modules_other: text('modulesOther'),
+      price_entry: picked('rate-entry'),
+      price_standard: picked('rate-standard'),
+      price_advanced: picked('rate-advanced'),
+      price_rental: picked('rate-rental'),
+      price_note: text('priceNote'),
+      intent: picked('intent'),
+      plan_choice: picked('plan'),
+      company_size: picked('size'),
+      industry: $('#industry').value || null,
+      consent: hasContact,
+      comment: text('comment')
+    }, hasContact ? contact : {});
+
+    const btn = $('#submitBtn');
+    btn.disabled = true;
+    btn.textContent = '送出中…';
+    buzz(14);
+    try {
+      if (live) {
+        const headers = { 'Content-Type': 'application/json', apikey: CONFIG.supabaseKey, Prefer: 'return=minimal' };
+        if (!CONFIG.supabaseKey.startsWith('sb_')) headers.Authorization = 'Bearer ' + CONFIG.supabaseKey;
+        if (CONFIG.schema && CONFIG.schema !== 'public') headers['Content-Profile'] = CONFIG.schema;
+        const url = CONFIG.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/' + encodeURIComponent(CONFIG.table);
+        const res = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(payload) });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+      } else {
+        await new Promise(r => setTimeout(r, 500));
+      }
+      done(payload);
+    } catch (err) {
+      fail('沒有送出成功，請再按一次。如果一直不行，也可以直接寄信給 Peter@pumpkinvrar.com。');
+      btn.disabled = false;
+      btn.textContent = '送出意見';
+    }
+  });
+
+  $('#copyMail').addEventListener('click', () => {
+    const b = $('#copyMail'), node = $('#mailText');
+    const selectIt = () => {
+      const r = document.createRange();
+      r.selectNodeContents(node);
+      const s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+      b.textContent = '請長按複製';
+    };
+    buzz(12);
+    try {
+      navigator.clipboard.writeText(node.textContent).then(() => { b.textContent = '已複製'; }, selectIt);
+    } catch (err) {
+      selectIt();
+    }
+  });
+
+  fit();
+  initEarth();
+  briefing();
+  window.addEventListener('load', () => { layoutScene(); placeTarget(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { layoutScene(); placeTarget(); });
+})();
+</script>
+</body>
+</html>

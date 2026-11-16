@@ -3,4 +3,13 @@
 !/index.html
 !/.nojekyll
 !/img/
+/img/*
+!/img/*.webp
+!/img/*.jpg
+!/img/*.jpeg
+!/img/*.png
+!/img/*.gif
+!/img/*.svg
+!/img/*.avif
+/img/*/
 .DS_Store

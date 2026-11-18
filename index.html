@@ -664,7 +664,6 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
         <label class="field" for="phoneOrLine">手機或 LINE ID<input type="text" id="phoneOrLine" maxlength="60" autocomplete="tel"></label>
       </div>
       <label class="field" for="email">Email<input type="email" id="email" maxlength="120" autocomplete="email" inputmode="email"></label>
-      <p class="note">留下聯絡方式，就代表同意南瓜虛擬科技用這些資料，跟你聯絡這個方案的消息；不另作他用，也不提供給第三方。</p>
       <label class="field" for="comment">還想跟南瓜說什麼？（選填）
         <textarea id="comment" rows="3" maxlength="1000"></textarea>
       </label>
@@ -1690,7 +1689,7 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
     const hasContact = Object.values(contact).some(Boolean);
     if (contact.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email)) { fail('Email 的格式好像不太對，請再檢查一下。'); return; }
 
-    /* 有留聯絡方式就視為同意聯絡（頁面上有寫明），資料表的 consent 欄位跟著記成 true。 */
+    /* 有留聯絡方式就視為同意聯絡（這一題的說明寫了「正式推出時我們會先通知你」），資料表的 consent 欄位跟著記成 true。 */
     const payload = Object.assign({
       source: CONFIG.source,
       modules: $$('input[name="modules"]:checked', form).map(el => el.value),

@@ -273,6 +273,12 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
 .kicker{display:block;margin-bottom:6px;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--cyan)}
 .hint{margin:-6px 0 0;font-size:14px;color:var(--muted)}
 .note{margin:0;font-size:13px;line-height:1.6;color:var(--muted)}
+.mac{display:flex;align-items:center;gap:14px;margin:0;padding:10px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel)}
+.mac img{flex:none;width:120px;height:90px;border-radius:10px;object-fit:cover}
+.mac figcaption{font-size:14px;line-height:1.5;color:var(--muted)}
+.mac figcaption b{display:block;margin-bottom:2px;font-size:16px;color:var(--fg)}
+.gift{margin:0;padding:12px 14px;border-radius:14px;border:1.5px solid var(--cyan);background:rgba(127,227,255,.08);font-size:14px;line-height:1.6;color:var(--muted)}
+.gift b{display:block;font-size:16px;color:var(--cyan)}
 
 .cards{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
 @media (min-width:520px){.cards.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -604,6 +610,11 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
     </nav>
 
     <section class="step" data-step="0">
+      <!-- 照片：Amanz／Unsplash（Unsplash License，可商用） https://unsplash.com/photos/oiWNsvv_oAI -->
+      <figure class="mac">
+        <img src="img/mac-mini.jpg" alt="桌上的一台 Mac mini" width="720" height="540" decoding="async">
+        <figcaption><b>主機：Mac mini</b>AI 中控已經裝好、接好，資料留在你公司</figcaption>
+      </figure>
       <h2 tabindex="-1"><span class="kicker">意見調查 1 / 4</span>你最想先讓 AI 幫你或公司做哪幾件事？</h2>
       <p class="hint">可以複選；還不確定也可以先跳過。</p>
       <div class="cards two" id="modules" role="group" aria-label="想要的功能"></div>
@@ -617,7 +628,8 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
       <h2 tabindex="-1"><span class="kicker">意見調查 2 / 4</span>如果推出，我們想這樣定價。你覺得呢？</h2>
       <p class="hint">每個方案點一下：太便宜、合理，還是太貴。</p>
       <div class="plans" id="plans"></div>
-      <p class="note">買斷方案含第一年維運；第二年起，維運年費約為建置費的 15–20%。AI 用量用公司自己的帳號，實報實銷。</p>
+      <p class="gift"><b>每個方案都送：南瓜 AI 補給站 2 年</b>持續更新 Skill、AI Agent、工具和知識</p>
+      <p class="note">維運是幫你顧主機和系統：買斷含第一年，第二年起約為建置費的 15–20%。<br>南瓜 AI 補給站是內容更新：每個方案都送 2 年。<br>AI 用量用公司自己的帳號，實報實銷。</p>
       <label class="field" for="priceNote">你心中合理的價格或付費方式（選填）
         <input type="text" id="priceNote" maxlength="300" placeholder="例如：15 萬以內，或想要月付">
       </label>
@@ -710,7 +722,7 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
     { key: 'entry', name: '入門', price: '19.8', unit: '萬', includes: ['主機＋AI 助理', '2 個標準功能模組', '一對一 AI 教學 1 次'] },
     { key: 'standard', name: '標準', tag: '主推', price: '25', unit: '萬', includes: ['入門的全部內容', '3–4 個功能模組，依你的流程調整', '舊資料匯入', '一對一 AI 教學 2 次（Claude／GPT／Gemini）'] },
     { key: 'advanced', name: '進階', price: '39.8', unit: '萬', suffix: '起', includes: ['標準的全部內容', '客製化工具 1 個，依你的需求打造'] },
-    { key: 'rental', name: '月租', price: '9,900', unit: '元／月', includes: ['3 年約，含主機與維運', 'AI 用量另計'] }
+    { key: 'rental', name: '月租', price: '9,900', unit: '元／月', includes: ['2 年約，內容同入門方案', '含主機與維運，期滿主機歸你', 'AI 用量另計'] }
   ];
   const RATES = [['low', '太便宜'], ['fair', '合理'], ['high', '太貴']];
   const REACT = { low: '記下了：可以再貴一點。', fair: '記下了：這個價格可以接受。', high: '記下了：要再便宜才會考慮。' };

@@ -613,7 +613,7 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
       <!-- 照片：Amanz／Unsplash（Unsplash License，可商用） https://unsplash.com/photos/oiWNsvv_oAI -->
       <figure class="mac">
         <img src="img/mac-mini.jpg" alt="桌上的一台 Mac mini" width="720" height="540" decoding="async">
-        <figcaption><b>主機：Mac mini</b>AI 中控已經裝好、接好，資料留在你公司</figcaption>
+        <figcaption><b>主機：Mac mini 或 Windows PC</b>AI 中控已經裝好、接好，資料留在你公司</figcaption>
       </figure>
       <h2 tabindex="-1"><span class="kicker">意見調查 1 / 4</span>你最想先讓 AI 幫你或公司做哪幾件事？</h2>
       <p class="hint">可以複選；還不確定也可以先跳過。</p>
@@ -1085,7 +1085,9 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
   const g3 = wcv.getContext('2d');
   const fit = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = window.innerWidth; H = window.innerHeight;
+    /* 以畫布實際顯示的大小為準：手機或 App 內建瀏覽器剛開啟時，innerHeight 可能和實際畫面不一致，地球會被拉成橢圓。 */
+    const box = fx.getBoundingClientRect();
+    W = box.width > 0 ? box.width : window.innerWidth; H = box.height > 0 ? box.height : window.innerHeight;
     fx.width = Math.round(W * dpr); fx.height = Math.round(H * dpr);
     g2.setTransform(dpr, 0, 0, dpr, 0, 0);
     wcv.width = Math.round(W * dpr); wcv.height = Math.round(H * dpr);
@@ -1251,7 +1253,15 @@ img.pilot{max-width:none;width:min(90vw,400px,46vh);top:calc(100% - max(330px,40
     el.textContent = text;
     el.parentNode.classList.toggle('on', Boolean(on));
   };
-  window.addEventListener('resize', () => { fit(); placeTarget(); kick(); });
+  const refit = () => { fit(); placeTarget(); kick(); };
+  window.addEventListener('resize', refit);
+  window.addEventListener('orientationchange', refit);
+  window.addEventListener('pageshow', refit);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', refit);
+  if (window.ResizeObserver) new ResizeObserver(() => {
+    const b = fx.getBoundingClientRect();
+    if (b.width > 0 && (Math.abs(b.width - W) > 0.5 || Math.abs(b.height - H) > 0.5)) refit();
+  }).observe(fx);
 
   $('#cargoChips').outerHTML = MODULES.map(m => `<span class="cg">${esc(m.short)}</span>`).join('');
   const b1 = $('#b1'), b2 = $('#b2'), b3 = $('#b3');
